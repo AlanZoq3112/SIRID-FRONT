@@ -1,0 +1,71 @@
+.error-text {
+    color: red;
+    font-size: 13px;
+  }
+  
+  .btn-circle {
+    width: 40px;
+    height: 40px;
+    padding: 2.5px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .text-bold {
+    font-weight: 500;
+  }
+  
+  .card-text .description-text {
+    display: block;
+  }
+  
+  .gradient-custom-2 {
+    background: #fccb90;
+    background: -webkit-linear-gradient(
+      to right,
+      #ee7724,
+      #d8363a,
+      #dd3675,
+      #b44593
+    );
+    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675);
+  }
+  
+  .btn-hover {
+    background-size: 300% 100%;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+  }
+  
+  .btn-hover:hover {
+    background-position: 100% 0;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+  }
+  
+  @media (min-width: 768px) {
+    .gradient-form {
+      height: 100vh !important;
+    }
+  }
+  @media (min-width: 769px) {
+    .gradient-custom-2 {
+      border-top-right-radius: 0.3rem;
+      border-bottom-right-radius: 0.3rem;
+    }
+  }
+  
+  .pointer {
+    cursor: pointer;
+  }
+  
