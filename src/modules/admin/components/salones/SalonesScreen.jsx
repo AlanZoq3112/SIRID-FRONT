@@ -39,7 +39,7 @@ const SalonesScreen = () => {
     try {
       setIsLoading(true);
       const data = await AxiosClient({ url: "/classroom/" });
-      console.log("Data", data.data);
+     
       if (!data.error) setSalones(data.data);
     } catch (error) {
       //poner alerta de error
@@ -53,7 +53,7 @@ const SalonesScreen = () => {
   }, []);
 
   const enableOrDisable = (row) => {
-    console.log("Row", row);
+   
     Alert.fire({
       title: confirmTitle,
       text: confirmMsg,
@@ -69,7 +69,6 @@ const SalonesScreen = () => {
       allowOutsideClick: () => !Alert.isLoading,
       preConfirm: async () => {
         row.status = !row.status;
-        console.log("Row", row);
         try {
           const response = await AxiosClient({
             method: "PATCH",
@@ -85,7 +84,7 @@ const SalonesScreen = () => {
               confirmButtonText: "Aceptar",
             });
           }
-          console.log("response", response);
+       
           return response;
         } catch (error) {
           Alert.fire({

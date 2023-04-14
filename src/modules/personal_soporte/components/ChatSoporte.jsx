@@ -1,65 +1,47 @@
-import React, {useState} from 'react'
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, InputGroup, FormControl, Button, Card } from 'react-bootstrap';
 
 
 const ChatSoporte = () => {
   const [message, setMessage] = useState('');
-  const [recipient, setRecipient] = useState('');
   const [messages, setMessages] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setMessages([...messages, { sender: 'me', recipient, content: message }]);
-    setMessage('');
-  };
-
-  const filterMessages = (msgs) => {
-    return msgs.filter((msg) => msg.recipient === '' || msg.recipient === recipient);
+    if (message.trim()) {
+      setMessages([...messages, { content: message, sender: 'user' }]);
+      setMessage('');
+    }
   };
   return (
-    <Container className="my-5">
-    <Row className="chat-header">
-      <Col>
-        <h1>Chat</h1>
-      </Col>
-      <Col>
-        <Form.Control
-          type="text"
-          placeholder="Recipient"
-          value={recipient}
-          onChange={(e) => setRecipient(e.target.value)}
-          className="form-input"
-        />
-      </Col>
-    </Row>
-    <Row className="chat-messages">
-      <Col>
-        {filterMessages(messages).map((msg, i) => (
-          <div key={i} className={msg.sender === 'me' ? 'message me' : 'message'}>
-            {msg.content}
+      <Container>
+      <Row>
+        <Col md={{ span: 8, offset: 2 }} className="mb-3">
+          <div className="chat-box phone-style">
+            {messages.map((msg, idx) => (
+              <div key={idx} className={`chat-message ${msg.sender}`}>
+                <span>{msg.content}</span>
+              </div>
+            ))}
           </div>
-        ))}
-      </Col>
-    </Row>
-    <Row className="chat-form">
-      <Col>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="message">
-            <Form.Control
-              type="text"
-              placeholder="Enter message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="form-input"
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit" className="form-submit">
-            Send
-          </Button>
-        </Form>
-      </Col>
-    </Row>
-  </Container>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={{ span: 8, offset: 2 }}>
+          <form onSubmit={handleSubmit}>
+            <InputGroup>
+              <FormControl
+                type="text"
+                placeholder="Type your message here"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <Button type="submit">Send</Button>
+            </InputGroup>
+          </form>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 

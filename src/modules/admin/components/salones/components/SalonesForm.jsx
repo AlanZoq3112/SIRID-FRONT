@@ -133,7 +133,6 @@ export const SalonesForm = ({ isOpen, setSalones, onClose }) => {
 
     const handleClose = () => {
         form.resetForm()
-        console.log("Modal Formulario de salones")
         onClose()
     }
 

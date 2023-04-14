@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { FaClipboardList, FaBars } from "react-icons/fa";
 import { AiOutlineUser, AiOutlinePlus } from "react-icons/ai";
-import { BiLogOut } from "react-icons/bi";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { Container, Row, Col, FormControl } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -10,8 +9,9 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { useFormik } from "formik";
 import { AuthContext } from "./../../../modules/auth/authContext";
 import { Button } from "react-bootstrap";
+import LogoutButton from "../LogoutButton";
 
-import IncidenciasForm from "../../../modules/Docente/Incidencias/components/IncidenciasForm";
+//Para subir las imagenes
 
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -29,12 +29,15 @@ import Alert, {
 import * as yup from "yup";
 import FeatherIcon from "feather-icons-react";
 
-const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
+const Sidebar = ({ children, setIncidencias, onClose }) => {
+  //Para subir imagenes
+
   //Para las Incidencias
   const { user } = useContext(AuthContext);
 
   const [salones, setSalones] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [areas, setAreas] = useState([]);
+  const [isloading, setIsLoading] = useState(false);
 
   //Obtener los Salones
   const getSalones = async () => {
@@ -43,11 +46,10 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
       const data = await AxiosClient({
         url: "/classroom/",
       });
-      console.log(data.data);
+
       if (!data.error) setSalones(data.data);
     } catch (error) {
       //alerta de erro
-      console.error("Error", error);
     } finally {
       setIsLoading(false);
     }
@@ -57,6 +59,26 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
     getSalones();
   }, []);
 
+  //Obtener las Areas
+  const getAreas = async () => {
+    try {
+      setIsLoading(true);
+      const data = await AxiosClient({
+        url: "/area/",
+      });
+
+      if (!data.error) setAreas(data.data);
+    } catch (error) {
+      //alerta de erro
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getAreas();
+  }, []);
+
   const form = useFormik({
     initialValues: {
       id: 0,
@@ -64,13 +86,17 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
       description: "",
       classroom: {
         id: 0,
+        area: {
+          id: 0,
+          name: "",
+        },
       },
       docente: {
         id: user.user.user.id,
       },
     },
     validationSchema: yup.object().shape({
-      name: yup.string(),
+      title: yup.string(),
     }),
     onSubmit: async (values) => {
       Alert.fire({
@@ -87,7 +113,6 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
         showLoaderOnConfirm: true,
         allowOutsideClick: () => !Alert.isLoading,
         preConfirm: async () => {
-          console.log(values);
           try {
             const response = await AxiosClient({
               method: "POST",
@@ -95,7 +120,6 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
               data: JSON.stringify(values),
             });
             if (!response.error) {
-              setIncidencias((incidencias) => [response.data, ...incidencias]);
               Alert.fire({
                 title: successTitle,
                 text: successMsg,
@@ -127,26 +151,9 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
     },
   });
 
-  const handleCloses = () => {
-    form.resetForm();
-    onClose();
-  };
-
   //Esto es para abrir y cerrar el sidebar
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-
-  //Cerrar sesion
-  const { dispatch } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
-    navigate("/auth", { replace: true });
-  };
-
-  //Formulario Para crear una nueva Inicidencia
-
-  //Subir Fotos y videos
 
   //Para el Modal
   const [showModal, setShowModal] = useState(false);
@@ -194,6 +201,13 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
       icon: <AiOutlineUser />,
     },
   ];
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Submit form logic
+    form.resetForm();
+    handleClose();
+  }
   return (
     <div className="contenedor">
       {/* Sidebar */}
@@ -214,9 +228,10 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
             to={item.path}
             key={index}
             className="link"
-            activeClassname="active"
+            activeclassname="active"
           >
             <div className="icono">{item.icon}</div>
+
             <div
               style={{ display: isOpen ? "block" : "none" }}
               className="link_text"
@@ -225,9 +240,7 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
             </div>
           </NavLink>
         ))}
-        <Button onClick={handleLogout}>
-          <BiLogOut />
-        </Button>
+        <LogoutButton />
       </div>
       <main>{children}</main>
       <div>
@@ -236,6 +249,7 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
           className="boton-flotante"
           variant="primary"
           onClick={handleShow}
+          title="Crear una nueva Incidencia"
         >
           <AiOutlinePlus size={30} />
         </Button>
@@ -264,20 +278,30 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
                         label="Titulo"
                       >
                         <Form.Control
+                          required
                           name="title"
                           placeholder="Titulo"
                           value={form.values.title}
-                          onChange={form.handleChange}
+                          onChange={(event) => {
+                            const value = event.target.value;
+                            // Remove extra spaces
+                            const newValue = value.replace(/ +(?= )/g, "");
+                            // Truncate to 50 characters
+                            const truncatedValue = newValue.slice(0, 50);
+                            // Update form value
+                            form.setFieldValue("title", truncatedValue);
+                          }}
                         />
                       </FloatingLabel>
                     </Col>
-                    {/* Seleccion de Edificio */}
+
                     <Col>
                       <FloatingLabel
                         controlId="floatingInputGrid"
                         label="Lugar de la Incidencia"
                       >
                         <Form.Control
+                          required
                           as="select"
                           name="classroom.id"
                           value={form.values.classroom.id}
@@ -308,12 +332,33 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
                       <Form.Group controlId="formDescription">
                         <Form.Label>Descripción:</Form.Label>
                         <FormControl
+                          required
                           name="description"
                           as="textarea"
                           value={form.values.description}
-                          onChange={form.handleChange}
+                          onChange={(event) => {
+                            const value = event.target.value;
+                            // Remove extra spaces
+                            const newValue = value.replace(/ +(?= )/g, "");
+                            // Truncate to 500 characters
+                            const truncatedValue = newValue.slice(0, 500);
+                            // Update form value
+                            form.setFieldValue("description", truncatedValue);
+                          }}
                           style={{ height: "100px" }}
+                          maxLength={500}
                         />
+                        {form.values.description.length <= 500 ? (
+                          <div className="text-right">
+                            {500 - form.values.description.length} caracteres
+                            restantes
+                          </div>
+                        ) : (
+                          <div className="error-text text-right">
+                            {form.values.description.length - 500} caracteres de
+                            más
+                          </div>
+                        )}
                         {form.errors.description && (
                           <span className="error-text">
                             {form.errors.description}
@@ -330,6 +375,7 @@ const Sidebar = ({ children, isOpens, setIncidencias, onClose }) => {
                   </Row>
                 </Container>
                 <br />
+
                 {/* Boton de envio del Formulario */}
                 <Form.Group className="mb-3">
                   <Row>

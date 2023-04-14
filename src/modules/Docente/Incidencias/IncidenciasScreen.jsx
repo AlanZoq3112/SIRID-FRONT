@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Card, Col, Row, Badge } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import AxiosClient from "./../../../shared/plugins/axios";
@@ -7,6 +7,10 @@ import { Loading } from "./../../../shared/components/Loading";
 import { FilterComponent } from "./../../../shared/components/FilterComponent";
 import { IncidenciasForm } from "./components/IncidenciasForm";
 import {EditIncidenciasScreen} from './components/EditIncidenciasScreen'
+import { AiOutlineInfoCircle , AiOutlineCheckCircle} from "react-icons/ai";
+import { BsAlarm } from "react-icons/bs";
+
+import { AuthContext } from "./../../auth/authContext";
 
 import Alert, {
   confirmMsg,
@@ -27,19 +31,22 @@ const IncidenciasScreen = () => {
   const [selectedIncidencias, setSelectedIncidencias] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [filterText, setFilterText] = useState("");
+  const [filterText, setFilterText] = useState(""
+  );
   const [isOpen, setIsOpen] = useState(false);
 
+  //Datos del usuario logueado
+  const { user } = useContext(AuthContext);
+
   const filteredIncidencias = incidencias.filter(
-    (incidencias) =>
-    incidencias.title && incidencias.title.toLowerCase().includes(filterText.toLowerCase())
+    (incidencias) => incidencias.docente.id === user.user.user.id
   );
 
   const getIncidencias = async () => {
     try {
       setIsLoading(true);
       const data = await AxiosClient({ url: "/incidence/" });
-      console.log("Incidencias", data.data);
+    
       if (!data.error) setIncidencias(data.data);
     } catch (error) {
       //poner alerta de error
@@ -68,7 +75,7 @@ const IncidenciasScreen = () => {
       allowOutsideClick: () => !Alert.isLoading,
       preConfirm: async () => {
         row.status = !row.status;
-        console.log("Row", row);
+      
         try {
           const response = await AxiosClient({
             method: "PATCH",
@@ -131,12 +138,7 @@ const IncidenciasScreen = () => {
         sortable: true,
         selector: (row) => row.description,
       },
-      {
-        name: "Creado en:",
-        cell: (row) => <div>{row.created_at}</div>,
-        sortable: true,
-        selector: (row) => row.created_at,
-      },
+      
       {
         name: "Salon",
         cell: (row) => <div>{row.classroom.name}</div>,
@@ -152,64 +154,36 @@ const IncidenciasScreen = () => {
     {
       name: "Status",
       cell: (row) => (
-        <div
-          style={{
-            backgroundColor: 
-              row.status.name === "Activo" ? "blue" :
-              row.status.name === "Concluido" ? "green" :
-              row.status.name === "Pendiente" ? "orange" :
-              "white",
-            color: "white",
-            display: "inline-block",
-            padding: "6px 12px",
-            borderRadius: "4px",
-            fontWeight: "bold"
-          }}
-        >
-          {row.status.name}
-        </div>
+        <>
+          {row.status.name === "Activo" ? (
+            <BsAlarm size={22} style={{ color: "FF7400" }} />
+          ) : row.status.name === "Concluido" ? (
+            <AiOutlineCheckCircle size={25} style={{ color: "green" }} />
+          ) : row.status.name === "Pendiente" ? (
+            <AiOutlineInfoCircle size={25} style={{ color: "red" }} />
+          ) : (
+            <AiOutlineInfoCircle size={25} style={{ color: "white" }} />
+          )}
+        </>
       ),
       sortable: true,
       selector: (row) => row.status.name,
     },
+   
     {
-      name: "Docente",
-      cell: (row) => <div>{row.docente.name}</div>,
-      sortable: true,
-      selector: (row) => row.docente.name,
-    },
-    {
-      name: "Acciones",
+      name: "Detalles",
       cell: (row) => (
         <>
           <ButtonCircle
-            icon="edit"
-            type={"btn btn-outline-warning btn-circle"}
+            icon="info"
+            type={"btn btn-outline-info btn-circle"}
             size={16}
             onClick={() => {
               setIsEditing(true);
               setSelectedIncidencias(row);
             }}
           ></ButtonCircle>
-          {row.status ? (
-            <ButtonCircle
-              icon="trash-2"
-              type={"btn btn-outline-danger btn-circle"}
-              size={16}
-              onClick={() => {
-                enableOrDisable(row);
-              }}
-            ></ButtonCircle>
-          ) : (
-            <ButtonCircle
-              icon="pocket"
-              type={"btn btn-outline-success btn-circle"}
-              size={16}
-              onClick={() => {
-                enableOrDisable(row);
-              }}
-            ></ButtonCircle>
-          )}
+         
         </>
       ), //fragment
     },
@@ -219,19 +193,8 @@ const IncidenciasScreen = () => {
     <Card>
       <Card.Header>
         <Row>
-          <Col>Incidencias</Col>
+          <Col>Incidencias Propias</Col>
           <Col className="text-end">
-            <ButtonCircle
-              type={"btn btn-outline-success"}
-              onClick={() => setIsOpen(true)}
-              icon="plus"
-              size={16}
-            />
-            <IncidenciasForm
-              isOpen={isOpen}
-              onClose={() => setIsOpen(false)}
-              setIncidencias={setIncidencias}
-            />
             {selectedIncidencias && (
               <EditIncidenciasScreen
                 isOpen={isEditing}
@@ -249,7 +212,7 @@ const IncidenciasScreen = () => {
           data={filteredIncidencias}
           progressPending={isLoading}
           progressComponent={<Loading />}
-          noDataComponent={"Sin registros"}
+          noDataComponent={"Sin incidencias registradas"}
           pagination
           paginationComponentOptions={options}
           subHeader

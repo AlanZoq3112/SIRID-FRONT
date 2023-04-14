@@ -1,25 +1,18 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineUser, AiOutlineHome } from "react-icons/ai";
 import { FiUsers } from "react-icons/fi";
 import { BsFillChatLeftDotsFill } from "react-icons/bs";
-import { BiLogOut } from "react-icons/bi";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
-import { AuthContext } from "./../../../modules/auth/authContext";
-import { Button } from "react-bootstrap";
+
+import LogoutButton from "../LogoutButton";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const AdminSidebar = ({ children }) => {
-  //Cerrar sesion
-  const { dispatch } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
-    navigate("/auth", { replace: true });
-  };
+
 
   //Esto es para abrir y cerrar el sidebar
   const [isOpen, setIsOpen] = useState(false);
@@ -97,7 +90,7 @@ const AdminSidebar = ({ children }) => {
             to={item.path}
             key={index}
             className="link"
-            activeClassname="active"
+            activeclassname="active"
           >
             <div className="icono">{item.icon}</div>
             <div
@@ -108,10 +101,9 @@ const AdminSidebar = ({ children }) => {
             </div>
           </NavLink>
         ))}
-        <Button onClick={handleLogout}>
-          <BiLogOut/>
-        </Button>
+        
       </div>
+      <LogoutButton/>
       <main>{children}</main>
       <div>
         <></>

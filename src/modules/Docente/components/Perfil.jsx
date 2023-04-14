@@ -1,10 +1,10 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { InputText } from "primereact/inputtext";
 import { Container, Row, Col } from "react-bootstrap";
 import Avatar from "react-avatar";
 import Card from "react-bootstrap/Card";
-import { Modal, Button, Alert } from "react-bootstrap";
-import { Link  } from 'react-router-dom';
+import {  Button, Alert } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../auth/authContext";
 
 const Perfil = (props) => {
@@ -13,7 +13,6 @@ const Perfil = (props) => {
   //Solicitar cambios
   const [showChanges, setShowChanges] = useState(false);
   console.log(user.user.user);
-  
 
   //Aqui se controlara lo del reestablecim iento de la contraseña
   //Esta es la alerta de confirmacion de que si se hizo la accion de reestablecimiento
@@ -22,7 +21,7 @@ const Perfil = (props) => {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleCloseConfirm = () => setShowConfirm(false);
-  const handleShowConfirm = () => setShowConfirm(true);
+ 
 
   const handleConfirmAction = () => {
     console.log("Se ha solicitado el cambio de contraseña!");
@@ -35,7 +34,6 @@ const Perfil = (props) => {
 
   return (
     <Container>
-       
       {showAlert && (
         <Alert variant="success" onClose={handleAlertDismiss} dismissible>
           Solicitud de Cambio de Contraseña realizada con exito
@@ -50,7 +48,7 @@ const Perfil = (props) => {
               <Container fluid>
                 <Row>
                   {/* Imagen de perfil */}
-                  <Col xs={12} md={2}>
+                  <Col className="text-center pt-1 pb-1" xs={12} md={2}>
                     <Avatar
                       className="avatar"
                       src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg"
@@ -64,18 +62,21 @@ const Perfil = (props) => {
                       <Row>
                         <Col>
                           <p>Nombre(s):</p>
-                          <InputText
-                            disabled
-                            value={user.user.user.name}
-                          />
+                          <InputText disabled value={user.user.user.name} />
                         </Col>
                         <Col>
                           <p>Primer Apellido:</p>
-                          <InputText disabled value={user.user.user.primerApellido} />
+                          <InputText
+                            disabled
+                            value={user.user.user.primerApellido}
+                          />
                         </Col>
                         <Col>
                           <p>Segundo Apellido:</p>
-                          <InputText disabled placeholder={user.user.user.segundoApellido} />
+                          <InputText
+                            disabled
+                            placeholder={user.user.user.segundoApellido}
+                          />
                         </Col>
                       </Row>
                     </Container>
@@ -85,46 +86,45 @@ const Perfil = (props) => {
                       <Row>
                         <Col>
                           <p>E-mail:</p>
+                          <InputText disabled placeholder={user.user.email} />
+                        </Col>
+                        <Col>
+                          <p>Divicion Academica:</p>
                           <InputText
                             disabled
-                            placeholder={user.user.email}
+                            placeholder={user.user.user.academicDivision.name}
                           />
                         </Col>
                         <Col>
-                        <p>Divicion Academica:</p>
-                          <InputText disabled placeholder={user.user.user.academicDivision.name}  />
-                        </Col>
-                        <Col>
                           <p>Rol de Usuario:</p>
-                          <InputText disabled placeholder={user.user.user.roles.name}  />
+                          <InputText
+                            disabled
+                            placeholder={user.user.user.roles.name}
+                          />
                         </Col>
                       </Row>
                     </Container>
                     <br />
                     <Container>
                       <Row>
-                        <Col>
-                          
-                        </Col>
-                        <Col>
-                          <p>ㅤ</p>
+                        <Col className="text-center">
                           <Button
                             onClick={setShowChanges}
                             className="cambiodatos"
                             size="lg"
                           >
-                            Solictar Cambiosㅤ
-                          </Button>{" "}
+                            Solicitar Cambios
+                          </Button>
                         </Col>
-                        <Col>
-                          <p>ㅤ</p>
+                        <Col className="text-center">
+                        <Link to="/CambiarContra">
                           <Button
-                            onClick={handleShowConfirm}
                             className="cambiodatos"
                             size="lg"
                           >
                             Cambiar Contraseña
-                          </Button>{" "}
+                          </Button>
+                          </Link>
                         </Col>
                       </Row>
                     </Container>
@@ -135,45 +135,6 @@ const Perfil = (props) => {
           </Card>
         </Col>
       </Row>
-      {/*Solicitar cambios */}
-      <Modal show={showChanges} onHide={() => setShowChanges(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Solicitus de cambios</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-        ¿Estás seguro de solicitar un cambio de datos??
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="danger" onClick={() => setShowChanges(false)}>
-            Cancelar
-          </Button>
-          <Link to="/SolicituCambios">
-      <Button variant="primary">Confirmar</Button>
-    </Link>
-        </Modal.Footer>
-      </Modal>
-
-      {/* Solicitar cambio de contrasenia */}
-      <Modal show={showConfirm} onHide={handleCloseConfirm}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmación de acción</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          ¿Estás seguro de solicitar un cambio de Contraseña?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={handleCloseConfirm}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={handleConfirmAction}>
-            Confirmar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-     
     </Container>
   );
 };

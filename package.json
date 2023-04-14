@@ -10,7 +10,7 @@
     "bootstrap": "^5.2.3",
     "cdbreact": "^1.5.9",
     "feather-icons-react": "^0.6.2",
-    "firebase": "^9.18.0",
+    "firebase": "^9.19.1",
     "formik": "^2.2.9",
     "primeicons": "^6.0.1",
     "primereact": "^9.2.0",

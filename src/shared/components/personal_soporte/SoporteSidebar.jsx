@@ -1,12 +1,13 @@
-import React , { useState, useRef ,useContext}from 'react'
-import { AuthContext } from "./../../../modules/auth/authContext";
-import { NavLink, useNavigate } from "react-router-dom";
+import React , { useState, useRef }from 'react'
+import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import { FaBars } from "react-icons/fa";
-import { BiLogOut } from "react-icons/bi";
+
 import { AiOutlineUser, AiOutlineHome } from "react-icons/ai";
 import { BsFillChatLeftDotsFill } from "react-icons/bs";
-import { Button } from "react-bootstrap";
+
+import LogoutButton from '../LogoutButton';
+
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -18,13 +19,7 @@ const SoporteSidebar = ({ children }) => {
 
 
   const toast = useRef(null);
-  //Cerrar sesion
-  const { dispatch } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
-    navigate("/auth", { replace: true });
-  };
+
   const show = () => {
     toast.current.show({
       severity: "success",
@@ -59,7 +54,7 @@ const SoporteSidebar = ({ children }) => {
 
     {
       className: "chat",
-      path: "/ChatSoporte",
+      path: "/ChatGeneral",
       name: "Chat",
       icon: <BsFillChatLeftDotsFill />,
     },
@@ -89,7 +84,7 @@ const SoporteSidebar = ({ children }) => {
             to={item.path}
             key={index}
             className="link"
-            activeClassname="active"
+            activeclassname="active"
           >
             <div className="icono">{item.icon}</div>
             <div
@@ -103,9 +98,7 @@ const SoporteSidebar = ({ children }) => {
           </NavLink>
           
         ))}
-        <Button onClick={handleLogout}>
-          <BiLogOut/>
-        </Button>
+       <LogoutButton/>
       </div>
       <main>{children}</main>
       <div>

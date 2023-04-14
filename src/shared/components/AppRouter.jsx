@@ -4,9 +4,17 @@ import { Container } from "react-bootstrap";
 import { AuthContext } from "../../modules/auth/authContext";
 import LoginScreen from "../../modules/auth/LoginScreen";
 
+import ChatRoom from "../../modules/chat/ChatRoom";
+
+import { Navigate } from 'react-router-dom';
+
+import ChangePassword from "./ChangePassword";
+import ForgotPassword from "./ForgotPassword";
+import ForgotPasswordLog from "./ForgotPasswordLog";
+
 import AdminSidebar from "./admin/AdminSideba";
 import Sidebar from "./docente/Sidebar";
-import SoporteSidebar from './personal_soporte/SoporteSidebar';
+import SoporteSidebar from "./personal_soporte/SoporteSidebar";
 
 //Pantallas profesor
 import Perfil from "./../../modules/Docente/components/Perfil";
@@ -20,45 +28,72 @@ import Users from "./../../modules/admin/components/users/Users";
 //Pantallas de personal de soporte
 //import ChatSoporte from "./../../modules/personal_soporte/components/ChatSoporte";
 import AtenderIncidencia from "./../../modules/personal_soporte/components/AtenderIncidencia";
-import IncidenciaEnCurso from "./../../modules/personal_soporte/components/IncidenciaEnCurso"
-import IncidenciasPendientes from "./../../modules/personal_soporte/components/IncidenciasPendientes"
-//import PerfilSoporte from "./../../modules/personal_soporte/components/PerfilSoporte"
+import IncidenciaEnCurso from "./../../modules/personal_soporte/components/IncidenciaEnCurso";
+import IncidenciasPendientes from "./../../modules/personal_soporte/components/IncidenciasPendientes";
+import ChatSoporte from "../../modules/personal_soporte/components/ChatSoporte";
 
 export const AppRouter = () => {
   const { user } = useContext(AuthContext);
   return (
     <Router>
       <Routes>
-        <Route path="/auth" element={<LoginScreen />}/>
+        <Route path="/auth" element={<LoginScreen />} />
+        <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route
           path="/*"
           element={
             user.isLogged ? (
               <>
+                {/* Si el usuario ha iniciado sesión por primera vez, redirige a la página de cambio de contraseña */}
+                {user.user.user.changePassword === false ? (
+                  <Navigate to="/reset-password" replace />
+                ) : null}
+
                 {user.user.user.roles.name === "SuperAdmin" ? (
                   <>
                     <AdminSidebar>
-                    <Container style={{ marginTop: "20px" }}>
-                      <Routes>
-                        <Route path="/Componentes" element={<Componentes />} />
-                        <Route path="/Users" element={<Users />} />
-                        <Route path="/Perfil" element={<Perfil/>} />
-                      </Routes>
-                    </Container>
+                      <Container style={{ marginTop: "20px" }}>
+                        <Routes>
+                          <Route
+                            path="/Componentes"
+                            element={<Componentes />}
+                          />
+                          <Route path="/Users" element={<Users />} />
+                          <Route path="/Perfil" element={<Perfil />} />
+
+                          <Route path="/reset-password" element={<ChangePassword />} />
+
+                          <Route path="/CambiarContra" element={<ForgotPasswordLog />} />
+                        </Routes>
+                      </Container>
                     </AdminSidebar>
                   </>
                 ) : null}
-                {user.user.user.roles.name === "Docente" ? (
+                {user.user.user.roles.name === "Docente"? (
                   <>
                     <>
                       <Sidebar>
-                      <Container style={{ marginTop: "20px" }}>
-                        <Routes>
-                          <Route path="/Incidencias" element={<IncidenciasScreen />} />
-                          <Route path="/Perfil" element={<Perfil/>} />
-                          <Route path="/SolicitudCambios" element={<SolicitudCambios/>} />
-                        </Routes>
-                      </Container>
+                        <Container style={{ marginTop: "20px" }}>
+                          <Routes>
+                            <Route
+                              path="/Incidencias"
+                              element={<IncidenciasScreen />}
+                            />
+                            <Route path="/Perfil" element={<Perfil />} />
+
+                            <Route path="/CambiarContra" element={<ForgotPasswordLog />} />
+                            <Route
+                              path="/SolicitudCambios"
+                              element={<SolicitudCambios />}
+                            />
+                            {  <Route
+                              path="/reset-password"
+                              element={<ChangePassword />}
+                            />}
+
+                            <Route path="/CambiarContra" element={<ForgotPasswordLog />} />
+                          </Routes>
+                        </Container>
                       </Sidebar>
                     </>
                   </>
@@ -67,21 +102,36 @@ export const AppRouter = () => {
                   <>
                     <>
                       <SoporteSidebar>
-                      <Container style={{ marginTop: "20px" }}>
-                        <Routes>
-                          <Route path="/AtenderIncidencia" element={<AtenderIncidencia />} />
-                          <Route path="/IncidenciaEnCurso" element={<IncidenciaEnCurso/>} />
-                          <Route path="/IncidenciasPendientes" element={<IncidenciasPendientes/>} />
-                          <Route path="/Perfil" element={<Perfil/>} />
-                        </Routes>
-                      </Container>
+                        <Container style={{ marginTop: "20px" }}>
+                          <Routes>
+                            <Route
+                              path="/AtenderIncidencia"
+                              element={<AtenderIncidencia />}
+                            />
+                            <Route
+                              path="/IncidenciaEnCurso"
+                              element={<IncidenciaEnCurso />}
+                            />
+                            <Route
+                              path="/IncidenciasPendientes"
+                              element={<IncidenciasPendientes />}
+                            />
+                            <Route
+                              path="/ChatGeneral"
+                              element={<ChatSoporte />}
+                            />
+                            <Route path="/Perfil" element={<Perfil />} />
+                            <Route path="/reset-password" element={<ChangePassword />} />
+                            <Route path="/CambiarContra" element={<ForgotPasswordLog />} />
+                          </Routes>
+                        </Container>
                       </SoporteSidebar>
                     </>
                   </>
                 ) : null}
               </>
             ) : (
-              <LoginScreen/>
+              <LoginScreen />
             )
           }
         />

@@ -14,10 +14,11 @@ main{
 .sidebars{
   background:#002e60 ;
   color: #fff;
-  height: 100vh;
+  height: 140vh;
   width: 200px;
   transition: all 0.5s;
 }
+
 
 .top_sections{
   display: flex;
@@ -25,12 +26,12 @@ main{
   padding: 20px 15px;
 }
 .logo{
-  font-size: 30px;
+  font-size: 40px;
   font-family: Arial, Helvetica, sans-serif;
 }
 .barss{
   display: flex;
-  font-size: 25px;
+  font-size: 20px;
   font-family: Arial, Helvetica, sans-serif;
   margin-left: 50px;
 }
@@ -38,7 +39,7 @@ main{
 .link{
   display: flex;
   color: #fff;
-  padding: 10px 15px;
+  padding: 30px 15px;
   text-decoration: none;
   gap: 15px;
   transition: all 0.5s;
@@ -201,4 +202,94 @@ main{
 body {
   background-image: url('https://firebasestorage.googleapis.com/v0/b/carsibb-eb9b3.appspot.com/o/portada%20fondo%20SIRID.png?alt=media&token=b33ab736-f674-4268-9884-071e92ccb230');
   background-size: cover;
+}
+
+.btn-primario {
+  background-color: #009475;
+}
+
+.index-cell {
+  width: 30px;
+  text-align: center;
+}
+.hoverable{
+  color: #fff;
+}
+.hoverable:hover {
+  color: #5af0d7;
+}
+
+@media only screen and (max-width: 768px) {
+  .modal-content {
+    max-height: 100%;
+    overflow-y: scroll;
+  }
+  .modal-dialog {
+    margin: 0;
+    max-width: 100%;
+  }
+  .modal-body {
+    padding: 1rem;
+  }
+  .form-group {
+    margin-bottom: 1rem;
+  }
+}
+
+.chat-box {
+  background-color: #f8f9fa;
+  border-radius: 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  height: 400px;
+  overflow-y: scroll;
+  padding: 20px;
+}
+
+.chat-message {
+  border-radius: 20px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  position: relative;
+  width: 70%;
+}
+
+.chat-message.sent {
+  background-color: #007bff;
+  color: #fff;
+  left: 30%;
+}
+
+.chat-message.received {
+  background-color: #fff;
+  color: #000;
+  right: 30%;
+}
+
+.chat-message span {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+form {
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+
+input[type="text"] {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  margin-right: 10px;
+  padding: 10px 20px;
+  width: 80%;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 20px;
 }

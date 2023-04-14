@@ -47,7 +47,7 @@ export const TiposScreen = () => {
     /*Recibe una dependencia, si está vacío solo se renderiza una vez, si no, se ejecuta cada que haya un cambio en la dependencia*/
 
     const enableOrDisable = (row) => {
-        console.log('Row', row);
+      
         Alert.fire({
             title: confirmTitle,
             text: confirmMsg,
@@ -62,8 +62,7 @@ export const TiposScreen = () => {
             showLoaderOnConfirm: true,
             allowOutsideClick: () => !Alert.isLoading,
             preConfirm: async () => {
-                row.status = !row.status
-                console.log('Row', row);
+                row.status = !row.status             
                 try {
                     const response = await AxiosClient({
                         method: 'PATCH',
@@ -79,7 +78,6 @@ export const TiposScreen = () => {
                             confirmButtonText: 'Aceptar'
                         })
                     }
-                    console.log('response', response);
                     return response
                 } catch (error) {
                     Alert.fire({

@@ -25,11 +25,11 @@ export const EditUserForm = ({ isOpen, setUsuarios, onClose, usuarios }) => {
       const data = await AxiosClient({
         url: "/academic/",
       });
-      console.log(data.data);
+   
       if (!data.error) setDiviciones(data.data);
     } catch (error) {
       //alerta de erro
-      console.error("Error", error);
+     
     } finally {
       setIsLoading(false);
     }
@@ -46,12 +46,11 @@ export const EditUserForm = ({ isOpen, setUsuarios, onClose, usuarios }) => {
       const data = await AxiosClient({
         url: "/role/",
       });
-      console.log(data.data);
+    
       if (!data.error) setRoles(data.data);
     } catch (error) {
       //alerta de erro
-      console.error("Error", error);
-    } finally {
+   
       setIsLoading(false);
     }
   };
@@ -156,7 +155,6 @@ export const EditUserForm = ({ isOpen, setUsuarios, onClose, usuarios }) => {
       role,
       id,
     } = usuarios;
-    console.log(id);
     form.values.id = id;
     form.values.name = name;
     form.values.primer_apellido = primerApellido;

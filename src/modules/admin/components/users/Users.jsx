@@ -30,10 +30,13 @@ const Users = () => {
   const [filterText, setFilterText] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
+  
+
   const filteredUsuarios = usuarios.filter(
     (usuarios) =>
       usuarios.name && usuarios.name.toLowerCase().includes(filterText.toLowerCase())
   );
+
 
   const getUsuarios = async () => {
     try {
@@ -118,7 +121,7 @@ const Users = () => {
   const columns = React.useMemo(() => [
     {
       name: "#",
-      cell: (row, index) => <div>{index + 1}</div>,
+      cell: (row, index) => <div style={{ width: '50px', padding: '5px' }}>{index + 1}</div>,
       sortable: true,
     },
     {
@@ -128,23 +131,23 @@ const Users = () => {
       selector: (row) => row.name,
     },
     {
-        name: "Primer Apelido",
-        cell: (row) => <div>{row.primerApellido}</div>,
-        sortable: true,
-        selector: (row) => row.primerApellido,
-      },
-      {
-        name: "Segundo Apelido",
-        cell: (row) => <div>{row.segundoApellido}</div>,
-        sortable: true,
-        selector: (row) => row.segundoApellido,
-      },
-      {
-        name: "Correo Electronico",
-        cell: (row) => <div>{row.correoElectronico}</div>,
-        sortable: true,
-        selector: (row) => row.correoElectronico,
-      },
+      name: "Primer Apelido",
+      cell: (row) => <div>{row.primerApellido}</div>,
+      sortable: true,
+      selector: (row) => row.primerApellido,
+    },
+    {
+      name: "Segundo Apelido",
+      cell: (row) => <div>{row.segundoApellido}</div>,
+      sortable: true,
+      selector: (row) => row.segundoApellido,
+    },
+    {
+      name: "E-mail",
+      cell: (row) => <div style={{ width: '700px', padding: '5px' }}>{row.correoElectronico}</div>,
+      sortable: true,
+      selector: (row) => row.correoElectronico,
+    },
     {
       name: "Rol",
       cell: (row) => <div>{row.roles.name}</div>,
@@ -158,16 +161,16 @@ const Users = () => {
       selector: (row) => row.academicDivision.name,
     },
     {
-        name: "Estado",
-        cell: (row) =>
-          row.status ? (
-            <Badge bg="success">Activo</Badge>
-          ) : (
-            <Badge bg="danger">Inactivo</Badge>
-          ),
-        sortable: true,
-        selector: (row) => row.status,
-      },
+      name: "Estado",
+      cell: (row) =>
+        row.status ? (
+          <Badge bg="success">Activo</Badge>
+        ) : (
+          <Badge bg="danger">Inactivo</Badge>
+        ),
+      sortable: true,
+      selector: (row) => row.status,
+    },
     {
       name: "Acciones",
       cell: (row) => (
@@ -203,7 +206,8 @@ const Users = () => {
         </>
       ), //fragment
     },
-  ]);
+  ], []);
+  
 
   return (
     <Card>
