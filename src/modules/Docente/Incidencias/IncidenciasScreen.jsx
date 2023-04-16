@@ -5,7 +5,6 @@ import AxiosClient from "./../../../shared/plugins/axios";
 import { ButtonCircle } from "./../../../shared/components/ButtonCircle";
 import { Loading } from "./../../../shared/components/Loading";
 import { FilterComponent } from "./../../../shared/components/FilterComponent";
-import { IncidenciasForm } from "./components/IncidenciasForm";
 import {EditIncidenciasScreen} from './components/EditIncidenciasScreen'
 import { AiOutlineInfoCircle , AiOutlineCheckCircle} from "react-icons/ai";
 import { BsAlarm } from "react-icons/bs";
@@ -174,18 +173,27 @@ const IncidenciasScreen = () => {
       name: "Detalles",
       cell: (row) => (
         <>
-          <ButtonCircle
-            icon="info"
-            type={"btn btn-outline-info btn-circle"}
-            size={16}
-            onClick={() => {
-              setIsEditing(true);
-              setSelectedIncidencias(row);
-            }}
-          ></ButtonCircle>
-         
+          {row.status.name === "Pendiente" ? (
+            <ButtonCircle
+              icon="info"
+              type={"btn btn-outline-info btn-circle disabled"}
+              size={16}
+              disabled
+            ></ButtonCircle>
+          ) : (
+            <ButtonCircle
+            
+              icon="info"
+              type={"btn btn-outline-info btn-circle"}
+              size={16}
+              onClick={() => {
+                setIsEditing(true);
+                setSelectedIncidencias(row);
+              }}
+            ></ButtonCircle>
+          )}
         </>
-      ), //fragment
+      ),
     },
   ]);
 

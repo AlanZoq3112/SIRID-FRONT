@@ -33,11 +33,11 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
       const data = await AxiosClient({
         url: "/academic/",
       });
-      console.log(data.data);
+
       if (!data.error) setDiviciones(data.data);
     } catch (error) {
       //alerta de erro
-      console.error("Error", error);
+ 
     } finally {
       setIsLoading(false);
     }
@@ -53,11 +53,11 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
       const data = await AxiosClient({
         url: "/role/",
       });
-      console.log(data.data);
+   
       if (!data.error) setRoles(data.data);
     } catch (error) {
       //alerta de erro
-      console.error("Error", error);
+   
     } finally {
       setIsLoading(false);
     }
@@ -87,7 +87,17 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
       },
     },
     validationSchema: yup.object().shape({
-      name: yup.string(),
+      correo_electronico: yup
+        .string()
+        .email("")
+        .test(
+          "extension",
+          "Solo se permiten correos con la extensión @utez.edu.mx",
+          (value) => {
+            return value.endsWith("@utez.edu.mx");
+          }
+        )
+        
     }),
     onSubmit: async (values) => {
       Alert.fire({
@@ -104,7 +114,7 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
         showLoaderOnConfirm: true,
         allowOutsideClick: () => !Alert.isLoading,
         preConfirm: async () => {
-          console.log(values);
+       
           try {
             const response = await AxiosClient({
               method: "POST",
@@ -171,7 +181,24 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
                     name="name"
                     placeholder="Nombre"
                     value={form.values.name}
-                    onChange={form.handleChange}
+                    onChange={(event) => {
+                      const value = event.target.value;
+                      // Remove extra spaces and limit to 20 characters
+                      const newValue = value
+                        .replace(/\s{2,}/g, " ")
+                        .slice(0, 50);
+                      // Remove non-letter and non-space characters
+                      const sanitizedValue = newValue.replace(
+                        /[^a-zA-Z\s]/g,
+                        ""
+                      );
+                      // Capitalize first letter after a space and make rest of letters lowercase
+                      const formattedValue = sanitizedValue
+                        .toLowerCase()
+                        .replace(/(?:^|\s)\S/g, (a) => a.toUpperCase());
+                      // Update form value
+                      form.setFieldValue("name", formattedValue);
+                    }}
                     onKeyPress={(event) => {
                       const lastTwoChars = form.values.name.slice(-2);
                       const currentChar = event.key;
@@ -191,6 +218,7 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
                         return;
                       }
                     }}
+                    required
                   />
 
                   {form.errors.name && (
@@ -202,22 +230,30 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
                 <Form.Group className="mb-3">
                   <Form.Label>Primer Apellido</Form.Label>
                   <FormControl
+                    required
                     name="primer_apellido"
                     placeholder="Primer Apellido"
                     value={form.values.primer_apellido}
                     maxLength={20}
                     onChange={(event) => {
                       const value = event.target.value;
-                      // Remove spaces, numbers and limit to 20 characters
-                      const newValue = value.replace(/[^a-zA-Z]/g, '').slice(0, 20);
-                      // Remove repeated characters
-                      const sanitizedValue = newValue.replace(/(.)\1\1+/g, '$1$1');
+                      // Remove extra spaces and limit to 20 characters
+                      const newValue = value
+                        .replace(/\s{2,}/g, " ")
+                        .slice(0, 20);
+                      // Remove non-letter and non-space characters
+                      const sanitizedValue = newValue.replace(
+                        /[^a-zA-Z\s]/g,
+                        ""
+                      );
                       // Capitalize first letter and make rest of letters lowercase
-                      const formattedValue = sanitizedValue.charAt(0).toUpperCase() + sanitizedValue.slice(1).toLowerCase();
+                      const formattedValue =
+                        sanitizedValue.charAt(0).toUpperCase() +
+                        sanitizedValue.slice(1).toLowerCase();
                       // Update form value
-                      form.setFieldValue('primer_apellido', formattedValue);
+                      form.setFieldValue("primer_apellido", formattedValue);
                     }}
-                  />                  
+                  />
 
                   {form.errors.primer_apellido && (
                     <span className="error-text">
@@ -230,6 +266,7 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
                 <Form.Group className="mb-3">
                   <Form.Label>Segundo Apellido</Form.Label>
                   <FormControl
+                    required
                     name="segundo_apellido"
                     placeholder="Segundo Apellido"
                     value={form.values.segundo_apellido}
@@ -275,11 +312,18 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
                 <Form.Group className="mb-3">
                   <Form.Label>Correo Electronico</Form.Label>
                   <FormControl
+                    required
                     name="correo_electronico"
-                    placeholder="Correo Electronico"
-                    value={form.values.correo_electronico}
-                    onChange={form.handleChange}
+                    placeholder="Correo Electrónico"
+                    value={form.values.correo_electronico.replace(/\s/g, "")} // Eliminar espacios en blanco
+                    onChange={(e) =>
+                      form.setFieldValue(
+                        "correo_electronico",
+                        e.target.value.replace(/\s/g, "")
+                      )
+                    }
                   />
+
                   {form.errors.correo_electronico && (
                     <span className="error-text">
                       {form.errors.correo_electronico}
@@ -289,15 +333,17 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-                  <Form.Label>Divicion Academica</Form.Label>
+                  <Form.Label>Division Academica</Form.Label>
                   <Form.Control
+                    required
                     as="select"
                     name="academicDivision.id"
                     value={form.values.academicDivision.id}
                     onChange={form.handleChange}
                   >
-                    <option>Seleccion de Divicion Academica</option>
+                    <option>Academia a la que Pertenece</option>
                     {diviciones.map((divicion) => (
+                    
                       <option
                         key={divicion.id}
                         value={divicion.id}
@@ -313,12 +359,13 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
                 <Form.Group className="mb-3">
                   <Form.Label>Rol del Usuario</Form.Label>
                   <Form.Control
+                    required
                     as="select"
                     name="role.id"
                     value={form.values.role.id}
                     onChange={form.handleChange}
                   >
-                    <option>Seleccion de Rol de usuario</option>
+                    <option>Rol del Usuario</option>
                     {roles.map((rol) => (
                       <option
                         key={rol.id}

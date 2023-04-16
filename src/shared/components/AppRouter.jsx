@@ -4,7 +4,6 @@ import { Container } from "react-bootstrap";
 import { AuthContext } from "../../modules/auth/authContext";
 import LoginScreen from "../../modules/auth/LoginScreen";
 
-import ChatRoom from "../../modules/chat/ChatRoom";
 
 import { Navigate } from 'react-router-dom';
 
@@ -18,7 +17,6 @@ import SoporteSidebar from "./personal_soporte/SoporteSidebar";
 
 //Pantallas profesor
 import Perfil from "./../../modules/Docente/components/Perfil";
-import SolicitudCambios from "./../../modules/Docente/components/cambios/SolicitudCambios";
 import IncidenciasScreen from "../../modules/Docente/Incidencias/IncidenciasScreen";
 
 //Pantallas Admin
@@ -27,8 +25,7 @@ import Users from "./../../modules/admin/components/users/Users";
 
 //Pantallas de personal de soporte
 //import ChatSoporte from "./../../modules/personal_soporte/components/ChatSoporte";
-import AtenderIncidencia from "./../../modules/personal_soporte/components/AtenderIncidencia";
-import IncidenciaEnCurso from "./../../modules/personal_soporte/components/IncidenciaEnCurso";
+
 import IncidenciasPendientes from "./../../modules/personal_soporte/components/IncidenciasPendientes";
 import ChatSoporte from "../../modules/personal_soporte/components/ChatSoporte";
 
@@ -44,7 +41,6 @@ export const AppRouter = () => {
           element={
             user.isLogged ? (
               <>
-                {/* Si el usuario ha iniciado sesión por primera vez, redirige a la página de cambio de contraseña */}
                 {user.user.user.changePassword === false ? (
                   <Navigate to="/reset-password" replace />
                 ) : null}
@@ -71,32 +67,27 @@ export const AppRouter = () => {
                 ) : null}
                 {user.user.user.roles.name === "Docente"? (
                   <>
-                    <>
-                      <Sidebar>
-                        <Container style={{ marginTop: "20px" }}>
-                          <Routes>
-                            <Route
-                              path="/Incidencias"
-                              element={<IncidenciasScreen />}
-                            />
-                            <Route path="/Perfil" element={<Perfil />} />
+                    <Sidebar>
+                      <Container style={{ marginTop: "20px" }}>
+                        <Routes>
+                          <Route
+                            path="/Incidencias"
+                            element={<IncidenciasScreen />}
+                          />
+                          <Route path="/Perfil" element={<Perfil />} />
 
-                            <Route path="/CambiarContra" element={<ForgotPasswordLog />} />
-                            <Route
-                              path="/SolicitudCambios"
-                              element={<SolicitudCambios />}
-                            />
-                            {  <Route
-                              path="/reset-password"
-                              element={<ChangePassword />}
-                            />}
+                          <Route path="/CambiarContra" element={<ForgotPasswordLog />} />
+                          {  <Route
+                            path="/reset-password"
+                            element={<ChangePassword />}
+                          />}
 
                             <Route path="/CambiarContra" element={<ForgotPasswordLog />} />
                           </Routes>
                         </Container>
                       </Sidebar>
                     </>
-                  </>
+                  
                 ) : null}
                 {user.user.user.roles.name === "Soporte Tecnico" ? (
                   <>
@@ -104,14 +95,6 @@ export const AppRouter = () => {
                       <SoporteSidebar>
                         <Container style={{ marginTop: "20px" }}>
                           <Routes>
-                            <Route
-                              path="/AtenderIncidencia"
-                              element={<AtenderIncidencia />}
-                            />
-                            <Route
-                              path="/IncidenciaEnCurso"
-                              element={<IncidenciaEnCurso />}
-                            />
                             <Route
                               path="/IncidenciasPendientes"
                               element={<IncidenciasPendientes />}

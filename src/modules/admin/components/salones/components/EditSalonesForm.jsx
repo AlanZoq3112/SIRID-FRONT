@@ -25,11 +25,11 @@ export const EditSalonesForm = ({ isOpen, setSalones, onClose, salones }) => {
       const data = await AxiosClient({
         url: "/area/",
       });
-      console.log(data.data);
+    
       if (!data.error) setAreas(data.data);
     } catch (error) {
       //alerta de erro
-      console.error("Error", error);
+     
     } finally {
       setIsLoading(false);
     }
@@ -45,11 +45,11 @@ export const EditSalonesForm = ({ isOpen, setSalones, onClose, salones }) => {
       const data = await AxiosClient({
         url: "/type/",
       });
-      console.log(data.data);
+     
       if (!data.error) setTypes(data.data);
     } catch (error) {
       //alerta de erro
-      console.error("Error", error);
+
     } finally {
       setIsLoading(false);
     }
@@ -141,7 +141,6 @@ export const EditSalonesForm = ({ isOpen, setSalones, onClose, salones }) => {
 
   React.useMemo(() => {
     const { name, status, area, type, id } = salones;
-    console.log(id);
     form.values.id = id;
     form.values.name = name;
     form.values.status = status;

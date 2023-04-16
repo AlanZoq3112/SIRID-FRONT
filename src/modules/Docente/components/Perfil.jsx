@@ -12,7 +12,7 @@ const Perfil = (props) => {
 
   //Solicitar cambios
   const [showChanges, setShowChanges] = useState(false);
-  console.log(user.user.user);
+
 
   //Aqui se controlara lo del reestablecim iento de la contraseña
   //Esta es la alerta de confirmacion de que si se hizo la accion de reestablecimiento
@@ -24,7 +24,6 @@ const Perfil = (props) => {
  
 
   const handleConfirmAction = () => {
-    console.log("Se ha solicitado el cambio de contraseña!");
     setShowAlert(true);
     handleCloseConfirm();
   };
@@ -89,7 +88,7 @@ const Perfil = (props) => {
                           <InputText disabled placeholder={user.user.email} />
                         </Col>
                         <Col>
-                          <p>Divicion Academica:</p>
+                          <p>Division Academica:</p>
                           <InputText
                             disabled
                             placeholder={user.user.user.academicDivision.name}

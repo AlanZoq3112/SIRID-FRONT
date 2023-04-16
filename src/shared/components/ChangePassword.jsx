@@ -10,6 +10,7 @@ import {
   Container,
   Card,
   Figure,
+  InputGroup,
 } from "react-bootstrap";
 import * as yup from "yup";
 import AxiosClient from "./../plugins/axios";
@@ -25,7 +26,16 @@ import Alert, {
 import { AuthContext } from "./../../modules/auth/authContext";
 import { Dialog } from "primereact/dialog";
 
-const ChangePassword = ({ setUsuarios, onClose }) => {
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+export const ChangePassword = () => {
+  //Ocultar la contra
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
   const form = useFormik({
@@ -140,14 +150,25 @@ const ChangePassword = ({ setUsuarios, onClose }) => {
                               )}
                             </Form.Group>
                           </Form.Group>
+
                           <Form.Group className="mb-3">
                             <Form.Label>Contraseña</Form.Label>
-                            <FormControl
-                              name="contrasena"
-                              placeholder="Esta será tu Nueva Contraseña"
-                              value={form.values.contrasena}
-                              onChange={form.handleChange}
-                            />
+                            <InputGroup>
+                              <FormControl
+                                name="contrasena"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Nueva Contraseña"
+                                value={form.values.contrasena}
+                                onChange={form.handleChange}
+                              />
+                              <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                onClick={togglePasswordVisibility}
+                              >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                              </button>
+                            </InputGroup>
                             {form.errors.contrasena && (
                               <span className="error-text">
                                 {form.errors.contrasena}
@@ -182,19 +203,24 @@ const ChangePassword = ({ setUsuarios, onClose }) => {
       </section>
 
       <Dialog
-        header={"Bienvenid@ " + user.user.user.name + " "+ user.user.user.primerApellido}
+        header={
+          "Bienvenid@ " +
+          user.user.user.name +
+          " " +
+          user.user.user.primerApellido
+        }
         visible={visible}
         style={{ width: "50vw" }}
         onHide={() => setVisible(false)}
       >
         <p className="m-0">
-        ¡Hola! Bienvenido(a) al Sistema de Reportes de Incidencias Para Docentes (SIRID). 
-        Parece que es tu primer inicio de sesión en nuestro sistema 
-        o se ha restablecido tu contraseña. Por seguridad, 
-        te pedimos amablemente que cambies tu contraseña. 
-        Nuestro sistema no te permitirá realizar ninguna acción hasta que lo hagas. 
-        Una vez echo lo anteriro ya podras iniciar sesion con tu contraseña nueva.
-          </p>
+          ¡Hola! Bienvenido(a) al Sistema de Reportes de Incidencias Para
+          Docentes (SIRID). Parece que es tu primer inicio de sesión en nuestro
+          sistema o se ha restablecido tu contraseña. Por seguridad, te pedimos
+          amablemente que cambies tu contraseña. Nuestro sistema no te permitirá
+          realizar ninguna acción hasta que lo hagas. Una vez echo lo anterior
+          ya podras iniciar sesion con tu contraseña nueva.
+        </p>
       </Dialog>
     </>
   );

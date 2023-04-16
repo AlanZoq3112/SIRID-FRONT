@@ -8,6 +8,7 @@ import { FilterComponent } from "./../../../shared/components/FilterComponent";
 import { AiOutlineInfoCircle , AiOutlineCheckCircle} from "react-icons/ai";
 import { BsAlarm } from "react-icons/bs";
 import EditIncidenciasScreen from "../../Docente/Incidencias/components/EditIncidenciasScreen";
+import DetallesIncidencia from "./incidencias/DetallesIncidencia";
 
 const options = {
   rowsPerPageText: "Registros por página",
@@ -141,7 +142,7 @@ const IncidenciasPendientes = () => {
               size={16}
             />
             {selectedIncidencias && (
-              <EditIncidenciasScreen
+              <DetallesIncidencia
                 isOpen={isEditing}
                 onClose={() => setIsEditing(false)}
                 setIncidencias={setIncidencias}

@@ -22,11 +22,11 @@ export const SalonesForm = ({ isOpen, setSalones, onClose }) => {
             const data = await AxiosClient({
                 url: '/area/'
             })
-            console.log(data.data);
+        
             if (!data.error) setAreas(data.data)
         } catch (error) {
             //alerta de erro
-            console.error('Error', error);
+          
         } finally {
             setIsLoading(false)
         }
@@ -42,11 +42,11 @@ export const SalonesForm = ({ isOpen, setSalones, onClose }) => {
                 const data = await AxiosClient({
                     url: '/type/'
                 })
-                console.log(data.data);
+               
                 if (!data.error) setTypes(data.data)
             } catch (error) {
                 //alerta de erro
-                console.error('Error', error);
+               
             } finally {
                 setIsLoading(false)
             }
@@ -90,7 +90,7 @@ export const SalonesForm = ({ isOpen, setSalones, onClose }) => {
                 showLoaderOnConfirm: true,
                 allowOutsideClick: () => !Alert.isLoading,
                 preConfirm: async () => {
-                    console.log(values);
+                   
                     try {
                         const response = await AxiosClient({
                             method: 'POST',

@@ -363,7 +363,7 @@ export const EditIncidenciasScreen = ({
           <Container>
             <Row>
               <center>
-                <h4>Datos del Docente</h4>
+                <h4>Datos del Personal de Soporte Asignado</h4>
               </center>
             </Row>
           </Container>
@@ -376,11 +376,11 @@ export const EditIncidenciasScreen = ({
                   <Form.Control
                     disabled
                     as="select"
-                    name="docente.id"
-                    value={form.values.docente.id}
+                    name="personalSoporte.id"
+                    value={form.values.personalSoporte.id}
                     onChange={form.handleChange}
                   >
-                    <option>{usuarios.docente?.name}</option>
+                    <option>{usuarios.personalSoporte?.name ?? null}</option>
                     {usuarios.map((usuario) => (
                       <option
                         key={usuario.id}
@@ -399,11 +399,11 @@ export const EditIncidenciasScreen = ({
                   <Form.Control
                     disabled
                     as="select"
-                    name="docente.id"
-                    value={form.values.docente.id}
+                    name="personalSoporte.id"
+                    value={form.values.personalSoporte.id}
                     onChange={form.handleChange}
                   >
-                    <option>{usuarios.docente?.primerApellido}</option>
+                    <option>{usuarios.personalSoporte?.primerApellido ?? null}</option>
                     {usuarios.map((usuario) => (
                       <option
                         key={usuario.id}
@@ -422,11 +422,11 @@ export const EditIncidenciasScreen = ({
                   <Form.Control
                     disabled
                     as="select"
-                    name="docente.id"
-                    value={form.values.docente.id}
+                    name="personalSoporte.id"
+                    value={form.values.personalSoporte.id}
                     onChange={form.handleChange}
                   >
-                    <option>{usuarios.docente?.segundoApellido}</option>
+                    <option>{usuarios.personalSoporte?.segundoApellido ?? null}</option>
                     {usuarios.map((usuario) => (
                       <option
                         key={usuario.id}
@@ -449,11 +449,11 @@ export const EditIncidenciasScreen = ({
                 <Form.Control
                   disabled
                   as="select"
-                  name="docente.id"
-                  value={form.values.docente.id}
+                  name="personalSoporte.id"
+                  value={form.values.personalSoporte.id}
                   onChange={form.handleChange}
                 >
-                  <option>{usuarios.docente?.academicDivision.name}</option>
+                  <option>{usuarios.personalSoporte?.academicDivision.name ?? null}</option>
                   {usuarios.map((usuario) => (
                     <option
                       key={usuario.id}
@@ -472,11 +472,11 @@ export const EditIncidenciasScreen = ({
                 <Form.Control
                   disabled
                   as="select"
-                  name="docente.id"
-                  value={form.values.docente.id}
+                  name="personalSoporte.id"
+                  value={form.values.personalSoporte.id}
                   onChange={form.handleChange}
                 >
-                  <option>{usuarios.docente?.correoElectronico}</option>
+                  <option>{usuarios.personalSoporte?.correoElectronico ?? null}</option>
                   {usuarios.map((usuario) => (
                     <option
                       key={usuario.id}
@@ -493,87 +493,6 @@ export const EditIncidenciasScreen = ({
           </Row>
         </Container>
           
-      
-          {/* <Container>
-            <Row>
-              <center>
-                <h4>Datos del Personal de Soporte Asignado</h4>
-              </center>
-            </Row>
-          </Container>
-
-          <Row>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Nombre</Form.Label>
-                <Form.Control
-                  disabled
-                  as="select"
-                  name="personalSoporte.id"
-                  value={form.values.personalSoporte.id}
-                  onChange={form.handleChange}
-                >
-                  <option>{usuarios.personalSoporte?.name}</option>
-                  {usuarios.map((usuario) => (
-                    <option
-                      key={usuario.id}
-                      value={usuario.id}
-                      onChange={form.handleChange}
-                    >
-                      {usuario.name}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Primer Apellido</Form.Label>
-                <Form.Control
-                  disabled
-                  as="select"
-                  name="personalSoporte.id"
-                  value={form.values.personalSoporte.id}
-                  onChange={form.handleChange}
-                >
-                  <option>{usuarios.personalSoporte?.primerApellido}</option>
-                  {usuarios.map((usuario) => (
-                    <option
-                      key={usuario.id}
-                      value={usuario.id}
-                      onChange={form.handleChange}
-                    >
-                      {usuario.primerApellido}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Segundo Apellido</Form.Label>
-                <Form.Control
-                  disabled
-                  as="select"
-                  name="personalSoporte.id"
-                  value={form.values.personalSoporte.id}
-                  onChange={form.handleChange}
-                >
-                  <option>{usuarios.personalSoporte?.segundoApellido}</option>
-                  {usuarios.map((usuario) => (
-                    <option
-                      key={usuario.id}
-                      value={usuario.id}
-                      onChange={form.handleChange}
-                    >
-                      {usuario.segundoApellido}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-          </Row> */}
-
           <Form.Group className="mb-3">
             <Row>
               <Col className="text-end">

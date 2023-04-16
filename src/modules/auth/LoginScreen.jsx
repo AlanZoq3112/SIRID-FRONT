@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import AxiosClient from "./../../shared/plugins/axios";
@@ -9,7 +9,16 @@ import { Card, Container, Figure, Row, Col, Form } from "react-bootstrap";
 import Alert from "./../../shared/plugins/alert";
 import { Button } from "primereact/button";
 
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 export const LoginScreen = () => {
+  //Ocultar la contra
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const navigation = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
   const formik = useFormik({
@@ -97,15 +106,25 @@ export const LoginScreen = () => {
                     </Form.Group>
                     <Form.Group className="form-outline mb-4">
                       <Form.Label htmlFor="password">Contraseña</Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="*********"
-                        id="password"
-                        autoComplete="off"
-                        name="password"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                      />
+                      <div className="input-group">
+                        <Form.Control
+                          type={showPassword ? "text" : "password"}
+                          placeholder="*********"
+                          id="password"
+                          autoComplete="off"
+                          name="password"
+                          value={formik.values.password}
+                          onChange={formik.handleChange}
+                          className="form-control"
+                        />
+                        <button
+                          className="btn btn-outline-secondary"
+                          type="button"
+                          onClick={togglePasswordVisibility}
+                        >
+                          {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                      </div>
                       {formik.errors.password ? (
                         <span className="error-text">
                           {formik.errors.password}

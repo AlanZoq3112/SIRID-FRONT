@@ -11,8 +11,6 @@ import { AuthContext } from "./../../../modules/auth/authContext";
 import { Button } from "react-bootstrap";
 import LogoutButton from "../LogoutButton";
 
-//Para subir las imagenes
-
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -44,7 +42,7 @@ const Sidebar = ({ children, setIncidencias, onClose }) => {
     try {
       setIsLoading(true);
       const data = await AxiosClient({
-        url: "/classroom/",
+        url: "/classroom/select",
       });
 
       if (!data.error) setSalones(data.data);

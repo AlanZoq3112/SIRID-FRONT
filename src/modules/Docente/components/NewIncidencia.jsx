@@ -9,7 +9,6 @@ const NewIncidencia = ({ isOpen, onClose }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(`Se ha enviado el formulario con los siguientes datos: ${nombre}, ${apellido}, ${email}`);
     onClose();
   }
   return (
