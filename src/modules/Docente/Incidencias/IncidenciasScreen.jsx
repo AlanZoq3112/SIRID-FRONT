@@ -5,10 +5,10 @@ import AxiosClient from "./../../../shared/plugins/axios";
 import { ButtonCircle } from "./../../../shared/components/ButtonCircle";
 import { Loading } from "./../../../shared/components/Loading";
 import { FilterComponent } from "./../../../shared/components/FilterComponent";
-import {EditIncidenciasScreen} from './components/EditIncidenciasScreen'
-import { AiOutlineInfoCircle , AiOutlineCheckCircle} from "react-icons/ai";
+import { EditIncidenciasScreen } from "./components/EditIncidenciasScreen";
+import { AiOutlineInfoCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { BsAlarm } from "react-icons/bs";
-
+import { TabView, TabPanel } from "primereact/tabview";
 import { AuthContext } from "./../../auth/authContext";
 
 import Alert, {
@@ -30,8 +30,7 @@ const IncidenciasScreen = () => {
   const [selectedIncidencias, setSelectedIncidencias] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [filterText, setFilterText] = useState(""
-  );
+  const [filterText, setFilterText] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   //Datos del usuario logueado
@@ -40,12 +39,32 @@ const IncidenciasScreen = () => {
   const filteredIncidencias = incidencias.filter(
     (incidencias) => incidencias.docente.id === user.user.user.id
   );
+  //Incidencias Pendientes
+  const filteredPendientes = incidencias.filter(
+    (incidencias) => incidencias.docente.id === user.user.user.id &&
+      incidencias.title.toLowerCase().includes(filterText.toLowerCase()) &&
+      incidencias.status.name === "Pendiente"
+  );
+
+  //Incidencias Activas
+  const filteredActivas = incidencias.filter(
+    (incidencias) => incidencias.docente.id === user.user.user.id &&
+      incidencias.title.toLowerCase().includes(filterText.toLowerCase()) &&
+      incidencias.status.name === "Activo"
+  );
+
+  //Incidencias concluidas
+  const filteredConcluidas = incidencias.filter(
+    (incidencias) => incidencias.docente.id === user.user.user.id &&
+      incidencias.title.toLowerCase().includes(filterText.toLowerCase()) &&
+      incidencias.status.name === "Concluido"
+  );
 
   const getIncidencias = async () => {
     try {
       setIsLoading(true);
       const data = await AxiosClient({ url: "/incidence/" });
-    
+
       if (!data.error) setIncidencias(data.data);
     } catch (error) {
       //poner alerta de error
@@ -74,7 +93,7 @@ const IncidenciasScreen = () => {
       allowOutsideClick: () => !Alert.isLoading,
       preConfirm: async () => {
         row.status = !row.status;
-      
+
         try {
           const response = await AxiosClient({
             method: "PATCH",
@@ -132,18 +151,18 @@ const IncidenciasScreen = () => {
       selector: (row) => row.title,
     },
     {
-        name: "Descripción",
-        cell: (row) => <div>{row.description}</div>,
-        sortable: true,
-        selector: (row) => row.description,
-      },
-      
-      {
-        name: "Salon",
-        cell: (row) => <div>{row.classroom.name}</div>,
-        sortable: true,
-        selector: (row) => row.classroom.name,
-      },
+      name: "Descripción",
+      cell: (row) => <div>{row.description}</div>,
+      sortable: true,
+      selector: (row) => row.description,
+    },
+
+    {
+      name: "Salon",
+      cell: (row) => <div>{row.classroom.name}</div>,
+      sortable: true,
+      selector: (row) => row.classroom.name,
+    },
     {
       name: "Area",
       cell: (row) => <div>{row.classroom.area.name}</div>,
@@ -168,7 +187,7 @@ const IncidenciasScreen = () => {
       sortable: true,
       selector: (row) => row.status.name,
     },
-   
+
     {
       name: "Detalles",
       cell: (row) => (
@@ -182,7 +201,6 @@ const IncidenciasScreen = () => {
             ></ButtonCircle>
           ) : (
             <ButtonCircle
-            
               icon="info"
               type={"btn btn-outline-info btn-circle"}
               size={16}
@@ -198,39 +216,154 @@ const IncidenciasScreen = () => {
   ]);
 
   return (
-    <Card>
-      <Card.Header>
-        <Row>
-          <Col>Incidencias Propias</Col>
-          <Col className="text-end">
-            {selectedIncidencias && (
-              <EditIncidenciasScreen
-                isOpen={isEditing}
-                onClose={() => setIsEditing(false)}
-                setIncidencias={setIncidencias}
-                incidencias={selectedIncidencias}
-              />
-            )}
-          </Col>
-        </Row>
-      </Card.Header>
-      <Card.Body>
-        <DataTable
-          columns={columns}
-          data={filteredIncidencias}
-          progressPending={isLoading}
-          progressComponent={<Loading />}
-          noDataComponent={"Sin incidencias registradas"}
-          pagination
-          paginationComponentOptions={options}
-          subHeader
-          subHeaderComponent={headerComponent}
-          persistTableHead
-          striped={true}
-          highlightOnHover={true}
-        />
-      </Card.Body>
-    </Card>
+    <>
+      <div className="card">
+        <TabView>
+          <TabPanel header="Todas las incidencias" leftIcon="pi pi-copy mr-2">
+            <Card>
+              <Card.Header>
+                <Row>
+                  <Col>Incidencias Propias</Col>
+                  <Col className="text-end">
+                    {selectedIncidencias && (
+                      <EditIncidenciasScreen
+                        isOpen={isEditing}
+                        onClose={() => setIsEditing(false)}
+                        setIncidencias={setIncidencias}
+                        incidencias={selectedIncidencias}
+                      />
+                    )}
+                  </Col>
+                </Row>
+              </Card.Header>
+              <Card.Body>
+                <DataTable
+                  columns={columns}
+                  data={filteredIncidencias}
+                  progressPending={isLoading}
+                  progressComponent={<Loading />}
+                  noDataComponent={"Sin incidencias registradas"}
+                  pagination
+                  paginationComponentOptions={options}
+                  subHeader
+                  subHeaderComponent={headerComponent}
+                  persistTableHead
+                  striped={true}
+                  highlightOnHover={true}
+                />
+              </Card.Body>
+            </Card>
+          </TabPanel>
+          <TabPanel header="Pendientes" leftIcon="pi pi-book mr-2">
+            <Card>
+              <Card.Header>
+                <Row>
+                  <Col>Incidencias Propias</Col>
+                  <Col className="text-end">
+                    {selectedIncidencias && (
+                      <EditIncidenciasScreen
+                        isOpen={isEditing}
+                        onClose={() => setIsEditing(false)}
+                        setIncidencias={setIncidencias}
+                        incidencias={selectedIncidencias}
+                      />
+                    )}
+                  </Col>
+                </Row>
+              </Card.Header>
+              <Card.Body>
+                <DataTable
+                  columns={columns}
+                  data={filteredPendientes}
+                  progressPending={isLoading}
+                  progressComponent={<Loading />}
+                  noDataComponent={"Sin incidencias registradas"}
+                  pagination
+                  paginationComponentOptions={options}
+                  subHeader
+                  subHeaderComponent={headerComponent}
+                  persistTableHead
+                  striped={true}
+                  highlightOnHover={true}
+                />
+              </Card.Body>
+            </Card>
+          </TabPanel>
+
+          <TabPanel header="En curso" leftIcon="pi pi-stopwatch mr-2">
+            <Card>
+              <Card.Header>
+                <Row>
+                  <Col>Incidencias Propias</Col>
+                  <Col className="text-end">
+                    {selectedIncidencias && (
+                      <EditIncidenciasScreen
+                        isOpen={isEditing}
+                        onClose={() => setIsEditing(false)}
+                        setIncidencias={setIncidencias}
+                        incidencias={selectedIncidencias}
+                      />
+                    )}
+                  </Col>
+                </Row>
+              </Card.Header>
+              <Card.Body>
+                <DataTable
+                  columns={columns}
+                  data={filteredActivas}
+                  progressPending={isLoading}
+                  progressComponent={<Loading />}
+                  noDataComponent={"Sin incidencias registradas"}
+                  pagination
+                  paginationComponentOptions={options}
+                  subHeader
+                  subHeaderComponent={headerComponent}
+                  persistTableHead
+                  striped={true}
+                  highlightOnHover={true}
+                />
+              </Card.Body>
+            </Card>
+          </TabPanel>
+
+          <TabPanel header="Concluidas" leftIcon="pi pi-star mr-2">
+            <Card>
+              <Card.Header>
+                <Row>
+                  <Col>Incidencias Propias</Col>
+                  <Col className="text-end">
+                    {selectedIncidencias && (
+                      <EditIncidenciasScreen
+                        isOpen={isEditing}
+                        onClose={() => setIsEditing(false)}
+                        setIncidencias={setIncidencias}
+                        incidencias={selectedIncidencias}
+                      />
+                    )}
+                  </Col>
+                </Row>
+              </Card.Header>
+              <Card.Body>
+                <DataTable
+                  columns={columns}
+                  data={filteredConcluidas}
+                  progressPending={isLoading}
+                  progressComponent={<Loading />}
+                  noDataComponent={"Sin incidencias registradas"}
+                  pagination
+                  paginationComponentOptions={options}
+                  subHeader
+                  subHeaderComponent={headerComponent}
+                  persistTableHead
+                  striped={true}
+                  highlightOnHover={true}
+                />
+              </Card.Body>
+            </Card>
+          </TabPanel>
+        </TabView>
+      </div>
+    </>
   );
 };
 

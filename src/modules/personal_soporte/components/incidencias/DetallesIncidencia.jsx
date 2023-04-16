@@ -239,6 +239,7 @@ export const DetallesIncidencia = ({
       });
     },
   });
+
   React.useMemo(() => {
     const { id, title } = incidencias;
     changeStatus.values.id = id;
@@ -284,9 +285,7 @@ export const DetallesIncidencia = ({
       onHide={handleClose}
     >
       <Modal.Header closeButton>
-        <Modal.Title>
-          Datos de la incidencia desde la pantalla del docente
-        </Modal.Title>
+        <Modal.Title>Detalles de la Incidencia</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={form.handleSubmit}>

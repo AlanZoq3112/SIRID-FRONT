@@ -205,7 +205,7 @@ const Sidebar = ({ children, setIncidencias, onClose }) => {
     // Submit form logic
     form.resetForm();
     handleClose();
-  }
+  };
   return (
     <div className="contenedor">
       {/* Sidebar */}

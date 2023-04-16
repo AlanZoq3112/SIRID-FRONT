@@ -7,7 +7,7 @@ import { Loading } from "./../../../../shared/components/Loading";
 import { FilterComponent } from "./../../../../shared/components/FilterComponent";
 import { UserForm } from "./components/UserForm";
 import { EditUserForm } from "./components/EditUserForm";
-
+import { DowlandDocentes } from "./components/DowlandDocentes";
 import { TabView, TabPanel } from "primereact/tabview";
 
 import Alert, {
@@ -39,15 +39,19 @@ const Users = () => {
   );
 
   //Mostrar solo los docentes
-  const filteredDocentes = usuarios.filter((usuario) => usuario.roles.name === 'Docente');
+  const filteredDocentes = usuarios.filter(
+    (usuario) => usuario.roles.name === "Docente"
+  );
   //Mostrar solo los personales de soporte
-  const filteredSoporte = usuarios.filter((usuario) => usuario.roles.name === 'Soporte Tecnico');
+  const filteredSoporte = usuarios.filter(
+    (usuario) => usuario.roles.name === "Soporte Tecnico"
+  );
 
   const getUsuarios = async () => {
     try {
       setIsLoading(true);
       const data = await AxiosClient({ url: "/user/" });
-    
+
       if (!data.error) setUsuarios(data.data);
     } catch (error) {
       //poner alerta de error
@@ -61,7 +65,6 @@ const Users = () => {
   }, []);
 
   const enableOrDisable = (row) => {
-  
     Alert.fire({
       title: confirmTitle,
       text: confirmMsg,
@@ -77,7 +80,6 @@ const Users = () => {
       allowOutsideClick: () => !Alert.isLoading,
       preConfirm: async () => {
         row.status = !row.status;
-   
         try {
           const response = await AxiosClient({
             method: "PATCH",
@@ -93,7 +95,7 @@ const Users = () => {
               confirmButtonText: "Aceptar",
             });
           }
-       
+
           return response;
         } catch (error) {
           Alert.fire({
@@ -223,8 +225,6 @@ const Users = () => {
     []
   );
 
-
-
   return (
     <>
       <div className="card">
@@ -276,7 +276,7 @@ const Users = () => {
             </Card>
           </TabPanel>
           <TabPanel header="Docentes" leftIcon="pi pi-book mr-2">
-          <Card>
+            <Card>
               <Card.Header>
                 <Row>
                   <Col>Docentes</Col>
@@ -323,7 +323,7 @@ const Users = () => {
           </TabPanel>
 
           <TabPanel header="Personal de Soporte" leftIcon="pi pi-desktop mr-2">
-          <Card>
+            <Card>
               <Card.Header>
                 <Row>
                   <Col>Personal de Soporte Tecnico</Col>
