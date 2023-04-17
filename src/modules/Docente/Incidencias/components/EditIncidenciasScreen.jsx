@@ -504,10 +504,7 @@ export const EditIncidenciasScreen = ({
                   <FeatherIcon icon="x" />
                   &nbsp;Cerrar
                 </Button>
-                <Button type="submit" variant="outline-success">
-                  <FeatherIcon icon="check" />
-                  &nbsp;Atender
-                </Button>
+                
               </Col>
             </Row>
           </Form.Group>

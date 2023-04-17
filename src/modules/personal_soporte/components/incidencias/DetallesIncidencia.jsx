@@ -8,6 +8,7 @@ import {
   Modal,
   FormControl,
   Container,
+  Image,
 } from "react-bootstrap";
 import * as yup from "yup";
 import AxiosClient from "./../../../../shared/plugins/axios";
@@ -179,6 +180,9 @@ export const DetallesIncidencia = ({
         id: 0,
         name: "",
       },
+      resourcesList: [{
+        url: '',
+      }]
     },
     onSubmit: async (values) => {
       Alert.fire({
@@ -258,6 +262,7 @@ export const DetallesIncidencia = ({
       created_at,
       last_modify,
       finish_at,
+      resourcesList
     } = incidencias;
     form.values.id = id;
     form.values.title = title;
@@ -269,8 +274,10 @@ export const DetallesIncidencia = ({
     form.values.created_at = created_at;
     form.values.last_modify = last_modify;
     form.values.finish_at = finish_at;
+    form.values.resourcesList = resourcesList;
+    console.log(form.values.resourcesList = resourcesList)
   }, [incidencias]);
-
+ 
   const handleClose = () => {
     form.resetForm();
     onClose();
@@ -555,6 +562,13 @@ export const DetallesIncidencia = ({
               </Col>
             </Row>
           </Container>
+          <Container>
+            <Row>
+              <Col>
+              
+               </Col>
+            </Row>
+          </Container>
         </Form>
 
         <Form onSubmit={changeStatus.handleSubmit}>
@@ -593,10 +607,9 @@ export const DetallesIncidencia = ({
                   -
                 </Form.Group>
               </Col>
-              <Col></Col>
             </Row>
           </Container>
-
+                    
           <Form.Group className="mb-3">
             <Row>
               <Col className="text-end">

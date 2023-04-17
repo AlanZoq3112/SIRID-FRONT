@@ -32,6 +32,39 @@ const Users = () => {
   const [filterText, setFilterText] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
+  const descargarPdfDocentes = () => {
+    AxiosClient({
+      url: `/reports/TeacherList/pdf/`,
+      responseType: "blob",
+    }).then((response) => {
+      const url = window.URL.createObjectURL(response);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = 'Listado de Docentes';
+
+      setTimeout(() => {
+        link.click();
+      }, 200);
+    });
+  };
+
+  const descargarPdfSoporte = () => {
+    AxiosClient({
+      url: `/reports/supportList/pdf/'`,
+      responseType: "blob",
+    }).then((response) => {
+      const url = window.URL.createObjectURL(response);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = 'Listado de Docentes';
+
+      setTimeout(() => {
+        link.click();
+      }, 200);
+    });
+  };
+
+
   const filteredUsuarios = usuarios.filter(
     (usuarios) =>
       usuarios.name &&
@@ -281,17 +314,15 @@ const Users = () => {
                 <Row>
                   <Col>Docentes</Col>
                   <Col className="text-end">
-                    <ButtonCircle
-                      type={"btn btn-outline-success"}
-                      onClick={() => setIsOpen(true)}
-                      icon="user-plus"
-                      size={16}
-                    />
-                    <UserForm
-                      isOpen={isOpen}
-                      onClose={() => setIsOpen(false)}
-                      setUsuarios={setUsuarios}
-                    />
+                      <ButtonCircle
+                        type={"btn btn-outline-success"}
+                        icon="download"
+                        size={16}
+                        onClick={() => {
+                          descargarPdfDocentes();
+                        }}
+                      />
+                   
                     {selectedUsuarios && (
                       <EditUserForm
                         isOpen={isEditing}
@@ -328,17 +359,15 @@ const Users = () => {
                 <Row>
                   <Col>Personal de Soporte Tecnico</Col>
                   <Col className="text-end">
-                    <ButtonCircle
-                      type={"btn btn-outline-success"}
-                      onClick={() => setIsOpen(true)}
-                      icon="user-plus"
-                      size={16}
-                    />
-                    <UserForm
-                      isOpen={isOpen}
-                      onClose={() => setIsOpen(false)}
-                      setUsuarios={setUsuarios}
-                    />
+                  <ButtonCircle
+                        type={"btn btn-outline-success"}
+                        icon="download"
+                        size={16}
+                        onClick={() => {
+                          descargarPdfSoporte();
+                        }}
+                      />
+
                     {selectedUsuarios && (
                       <EditUserForm
                         isOpen={isEditing}
@@ -368,6 +397,11 @@ const Users = () => {
               </Card.Body>
             </Card>
           </TabPanel>
+
+          <TabPanel
+            header="Estadisticas de las inbcidencias"
+            leftIcon="pi pi-chart-bar mr-2"
+          ></TabPanel>
         </TabView>
       </div>
     </>

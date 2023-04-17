@@ -10,6 +10,8 @@ import { useFormik } from "formik";
 import { AuthContext } from "./../../../modules/auth/authContext";
 import { Button } from "react-bootstrap";
 import LogoutButton from "../LogoutButton";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../modules/chat/firebaseConfig ";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -24,12 +26,28 @@ import Alert, {
   successMsg,
   successTitle,
 } from "./../../plugins/alert";
-import * as yup from "yup";
 import FeatherIcon from "feather-icons-react";
+import { array } from "yup";
 
-const Sidebar = ({ children, setIncidencias, onClose }) => {
-  //Para subir imagenes
+const Sidebar = ({ children }) => {
 
+  const[preImage, setPreImage] = useState(null);
+
+  //Convertir imagenes a base64
+  const convertira64 =(archivos) =>{
+    Array.from(archivos).forEach(archivo =>{
+      var reader = new FileReader();
+       reader.readAsDataURL(archivo);
+       reader.onload=function(){
+        var arrayAuxiliar = [];
+        var base64 = reader.result;
+        arrayAuxiliar =base64.split(',');
+        setPreImage(arrayAuxiliar[1])
+       }
+    })
+  }
+  
+  
   //Para las Incidencias
   const { user } = useContext(AuthContext);
 
@@ -92,10 +110,8 @@ const Sidebar = ({ children, setIncidencias, onClose }) => {
       docente: {
         id: user.user.user.id,
       },
+      resources: []
     },
-    validationSchema: yup.object().shape({
-      title: yup.string(),
-    }),
     onSubmit: async (values) => {
       Alert.fire({
         title: confirmTitle,
@@ -111,6 +127,10 @@ const Sidebar = ({ children, setIncidencias, onClose }) => {
         showLoaderOnConfirm: true,
         allowOutsideClick: () => !Alert.isLoading,
         preConfirm: async () => {
+          values.resources = [{
+            filebase64: preImage,
+            mimeType: '.jpg'
+          }]
           try {
             const response = await AxiosClient({
               method: "POST",
@@ -200,12 +220,6 @@ const Sidebar = ({ children, setIncidencias, onClose }) => {
     },
   ];
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Submit form logic
-    form.resetForm();
-    handleClose();
-  };
   return (
     <div className="contenedor">
       {/* Sidebar */}
@@ -368,8 +382,9 @@ const Sidebar = ({ children, setIncidencias, onClose }) => {
                 </Container>
                 <Container>
                   <Row>
-                    <Col></Col>
-                    <Col></Col>
+                    <Col>
+                    <input  type="file" multiple onChange={(e)=>{convertira64(e.target.files)}} />
+                    </Col>
                   </Row>
                 </Container>
                 <br />
