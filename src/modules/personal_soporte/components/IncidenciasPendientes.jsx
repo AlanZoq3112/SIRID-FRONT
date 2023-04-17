@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import AxiosClient from "./../../../shared/plugins/axios";
@@ -7,6 +7,7 @@ import { Loading } from "./../../../shared/components/Loading";
 import { FilterComponent } from "./../../../shared/components/FilterComponent";
 import { AiOutlineInfoCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { BsAlarm } from "react-icons/bs";
+import { AuthContext } from "../../auth/authContext";
 import DetallesIncidencia from "./incidencias/DetallesIncidencia";
 import { FinalizarIncidencia } from "./incidencias/FinalizarIncidencia";
 import { TabView, TabPanel } from "primereact/tabview";
@@ -16,6 +17,7 @@ const options = {
 };
 
 const IncidenciasPendientes = () => {
+
   const [incidencias, setIncidencias] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [filterText, setFilterText] = useState("");
@@ -23,6 +25,7 @@ const IncidenciasPendientes = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isFinish, setIsFinish] = useState(false);
   const [setIsOpen] = useState(false);
+
 
   const filteredIncidencias = incidencias.filter(
     (incidencias) =>
@@ -172,6 +175,51 @@ const IncidenciasPendientes = () => {
     <>
       <div className="card">
         <TabView>
+        {/* <TabPanel header="Incidencias asignadas" leftIcon="pi pi-copy mr-2">
+        <Card>
+              <Card.Header>
+                <Row>
+                  <Col>Todas las Incidencias</Col>
+                  <Col className="text-end">
+                    {selectedIncidencias && (
+                      <DetallesIncidencia
+                        isOpen={isEditing}
+                        onClose={() => setIsEditing(false)}
+                        setIncidencias={setIncidencias}
+                        incidencias={selectedIncidencias}
+                      />
+                    )}
+
+                    {selectedIncidencias && (
+                      <FinalizarIncidencia
+                        isOpen={isFinish}
+                        onClose={() => setIsFinish(false)}
+                        setIncidencias={setIncidencias}
+                        incidencias={selectedIncidencias}
+                      />
+                    )}
+                  </Col>
+                </Row>
+              </Card.Header>
+              <Card.Body>
+                <DataTable
+                  columns={columns}
+                  data={filteredIncidencias}
+                  progressPending={isLoading}
+                  progressComponent={<Loading />}
+                  noDataComponent={"Sin incidencias registradas"}
+                  pagination
+                  paginationComponentOptions={options}
+                  subHeader
+                  subHeaderComponent={headerComponent}
+                  persistTableHead
+                  striped={true}
+                  highlightOnHover={true}
+                />
+              </Card.Body>
+            </Card>
+          </TabPanel> */}
+
           <TabPanel header="Todas las incidencias" leftIcon="pi pi-copy mr-2">
             <Card>
               <Card.Header>

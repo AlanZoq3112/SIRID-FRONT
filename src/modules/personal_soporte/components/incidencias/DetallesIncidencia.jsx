@@ -264,6 +264,7 @@ export const DetallesIncidencia = ({
       finish_at,
       resourcesList
     } = incidencias;
+    
     form.values.id = id;
     form.values.title = title;
     form.values.status = status;
@@ -274,10 +275,12 @@ export const DetallesIncidencia = ({
     form.values.created_at = created_at;
     form.values.last_modify = last_modify;
     form.values.finish_at = finish_at;
-    form.values.resourcesList = resourcesList;
-    console.log(form.values.resourcesList = resourcesList)
+    form.values.resourcesList = resourcesList
+
   }, [incidencias]);
- 
+  
+  const resourceUrls = form.values.resourcesList.map(resource => resource.url);
+  console.log("Resource URLs fuera del:", resourceUrls);
   const handleClose = () => {
     form.resetForm();
     onClose();
@@ -564,9 +567,14 @@ export const DetallesIncidencia = ({
           </Container>
           <Container>
             <Row>
+            <center>
+                <h4>Evidencias</h4>
+              </center>
+            </Row>
+            <Row>
               <Col>
-              
-               </Col>
+                      <Image height="200px" src={resourceUrls}></Image>
+              </Col>
             </Row>
           </Container>
         </Form>
