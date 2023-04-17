@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Row, Badge } from "react-bootstrap";
+import { Card, Col, Row, Badge, Container } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import AxiosClient from "./../../../../shared/plugins/axios";
 import { ButtonCircle } from "./../../../../shared/components/ButtonCircle";
@@ -40,7 +40,7 @@ const Users = () => {
       const url = window.URL.createObjectURL(response);
       const link = document.createElement("a");
       link.href = url;
-      link.download = 'Listado de Docentes';
+      link.download = "Listado de Docentes";
 
       setTimeout(() => {
         link.click();
@@ -50,13 +50,13 @@ const Users = () => {
 
   const descargarPdfSoporte = () => {
     AxiosClient({
-      url: `/reports/supportList/pdf/'`,
+      url: `/reports/supportList/pdf/`,
       responseType: "blob",
     }).then((response) => {
       const url = window.URL.createObjectURL(response);
       const link = document.createElement("a");
       link.href = url;
-      link.download = 'Listado de Docentes';
+      link.download = "Listado de Personal de Soporte";
 
       setTimeout(() => {
         link.click();
@@ -64,6 +64,21 @@ const Users = () => {
     });
   };
 
+  const descargarPdfEstadisticas = () => {
+    AxiosClient({
+      url: `/reports/statistics/pdf/`,
+      responseType: "blob",
+    }).then((response) => {
+      const url = window.URL.createObjectURL(response);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "Estadisticas de las incidencias";
+
+      setTimeout(() => {
+        link.click();
+      }, 200);
+    });
+  };
 
   const filteredUsuarios = usuarios.filter(
     (usuarios) =>
@@ -314,15 +329,15 @@ const Users = () => {
                 <Row>
                   <Col>Docentes</Col>
                   <Col className="text-end">
-                      <ButtonCircle
-                        type={"btn btn-outline-success"}
-                        icon="download"
-                        size={16}
-                        onClick={() => {
-                          descargarPdfDocentes();
-                        }}
-                      />
-                   
+                    <ButtonCircle
+                      type={"btn btn-outline-success"}
+                      icon="download"
+                      size={16}
+                      onClick={() => {
+                        descargarPdfDocentes();
+                      }}
+                    />
+
                     {selectedUsuarios && (
                       <EditUserForm
                         isOpen={isEditing}
@@ -359,14 +374,14 @@ const Users = () => {
                 <Row>
                   <Col>Personal de Soporte Tecnico</Col>
                   <Col className="text-end">
-                  <ButtonCircle
-                        type={"btn btn-outline-success"}
-                        icon="download"
-                        size={16}
-                        onClick={() => {
-                          descargarPdfSoporte();
-                        }}
-                      />
+                    <ButtonCircle
+                      type={"btn btn-outline-success"}
+                      icon="download"
+                      size={16}
+                      onClick={() => {
+                        descargarPdfSoporte();
+                      }}
+                    />
 
                     {selectedUsuarios && (
                       <EditUserForm
@@ -401,7 +416,29 @@ const Users = () => {
           <TabPanel
             header="Estadisticas de las inbcidencias"
             leftIcon="pi pi-chart-bar mr-2"
-          ></TabPanel>
+          >
+            <Container>
+              <Row>
+                <Col sm={8}>
+                  {" "}
+                  <p>
+                    En este documento se encunetran las Estadisticas generales
+                    en Graficas de todas las Incidencias
+                  </p>
+                </Col>
+                <Col sm={4} className="d-flex justify-content-center align-items-center">
+                <ButtonCircle
+                      type={"btn btn-outline-success"}
+                      icon="download"
+                      size={50}
+                      onClick={() => {
+                        descargarPdfEstadisticas();
+                      }}
+                    />
+                </Col>
+              </Row>
+            </Container>
+          </TabPanel>
         </TabView>
       </div>
     </>
