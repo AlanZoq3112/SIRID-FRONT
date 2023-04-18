@@ -9,6 +9,7 @@ import {
   FormControl,
   Container,
   Image,
+  Carousel,
 } from "react-bootstrap";
 import * as yup from "yup";
 import AxiosClient from "./../../../../shared/plugins/axios";
@@ -264,7 +265,7 @@ export const DetallesIncidencia = ({
       finish_at,
       resourcesList
     } = incidencias;
-    
+
     form.values.id = id;
     form.values.title = title;
     form.values.status = status;
@@ -278,7 +279,7 @@ export const DetallesIncidencia = ({
     form.values.resourcesList = resourcesList
 
   }, [incidencias]);
-  
+
   const resourceUrls = form.values.resourcesList.map(resource => resource.url);
   console.log("Resource URLs fuera del:", resourceUrls);
   const handleClose = () => {
@@ -567,13 +568,28 @@ export const DetallesIncidencia = ({
           </Container>
           <Container>
             <Row>
-            <center>
+              <center>
                 <h4>Evidencias</h4>
               </center>
             </Row>
             <Row>
               <Col>
-                      <Image height="200px" src={resourceUrls}></Image>
+                <Carousel>
+
+                  {
+                    resourceUrls.map((element) => (
+                      <Carousel.Item>
+                        <img
+                          className="d-block w-100"
+                          src={element}
+                          alt="First slide"
+                        />
+                      </Carousel.Item>
+
+                    ))
+                  }
+
+                </Carousel>
               </Col>
             </Row>
           </Container>
@@ -617,7 +633,7 @@ export const DetallesIncidencia = ({
               </Col>
             </Row>
           </Container>
-                    
+
           <Form.Group className="mb-3">
             <Row>
               <Col className="text-end">

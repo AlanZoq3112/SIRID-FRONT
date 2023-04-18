@@ -30,8 +30,8 @@ import FeatherIcon from "feather-icons-react";
 import { array } from "yup";
 
 const Sidebar = ({ children }) => {
-  const [preImage, setPreImage] = useState(null);
-  const [images, setImages] = useState([]);
+  const [preImage, setPreImage] = useState([]);
+
 
   //Convertir imagenes a base64
   const convertira64 = (archivos) => {
@@ -44,15 +44,24 @@ const Sidebar = ({ children }) => {
 
       reader.onload = function () {
         let base64 = reader.result;
-        images.push( base64.split(","))
-      
+        let imageProcess = base64.split(",")
+
+        preImage.push({
+          filebase64: imageProcess[1],
+          mimeType: '.' + archivo.type.split("/")[1],
+        })
+
 
         // setImages((e) => e, arrayAuxiliar);
         // setPreImage(arrayAuxiliar[1]);
       };
 
 
+
     });
+
+    console.log(preImage)
+
   };
 
   //Para las Incidencias
@@ -134,12 +143,10 @@ const Sidebar = ({ children }) => {
         showLoaderOnConfirm: true,
         allowOutsideClick: () => !Alert.isLoading,
         preConfirm: async () => {
-          values.resources = [
-            {
-              filebase64: preImage,
-              mimeType: ".jpg",
-            },
-          ];
+
+          console.log(preImage)
+
+          values.resources = preImage;
           try {
             const response = await AxiosClient({
               method: "POST",
