@@ -30,24 +30,31 @@ import FeatherIcon from "feather-icons-react";
 import { array } from "yup";
 
 const Sidebar = ({ children }) => {
-
-  const[preImage, setPreImage] = useState(null);
+  const [preImage, setPreImage] = useState(null);
+  const [images, setImages] = useState([]);
 
   //Convertir imagenes a base64
-  const convertira64 =(archivos) =>{
-    Array.from(archivos).forEach(archivo =>{
+  const convertira64 = (archivos) => {
+    Array.from(archivos).forEach((archivo) => {
+
+
       var reader = new FileReader();
-       reader.readAsDataURL(archivo);
-       reader.onload=function(){
-        var arrayAuxiliar = [];
-        var base64 = reader.result;
-        arrayAuxiliar =base64.split(',');
-        setPreImage(arrayAuxiliar[1])
-       }
-    })
-  }
-  
-  
+      reader.readAsDataURL(archivo);
+
+
+      reader.onload = function () {
+        let base64 = reader.result;
+        images.push( base64.split(","))
+      
+
+        setImages((e) => e, arrayAuxiliar);
+        setPreImage(arrayAuxiliar[1]);
+      };
+
+
+    });
+  };
+
   //Para las Incidencias
   const { user } = useContext(AuthContext);
 
@@ -110,7 +117,7 @@ const Sidebar = ({ children }) => {
       docente: {
         id: user.user.user.id,
       },
-      resources: []
+      resources: [],
     },
     onSubmit: async (values) => {
       Alert.fire({
@@ -127,10 +134,12 @@ const Sidebar = ({ children }) => {
         showLoaderOnConfirm: true,
         allowOutsideClick: () => !Alert.isLoading,
         preConfirm: async () => {
-          values.resources = [{
-            filebase64: preImage,
-            mimeType: '.jpg'
-          }]
+          values.resources = [
+            {
+              filebase64: preImage,
+              mimeType: ".jpg",
+            },
+          ];
           try {
             const response = await AxiosClient({
               method: "POST",
@@ -383,7 +392,13 @@ const Sidebar = ({ children }) => {
                 <Container>
                   <Row>
                     <Col>
-                    <input  type="file" multiple onChange={(e)=>{convertira64(e.target.files)}} />
+                      <input
+                        type="file"
+                        multiple
+                        onChange={(e) => {
+                          convertira64(e.target.files);
+                        }}
+                      />
                     </Col>
                   </Row>
                 </Container>

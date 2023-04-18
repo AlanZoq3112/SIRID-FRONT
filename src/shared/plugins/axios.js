@@ -9,7 +9,7 @@ const requestHandler = (request) => {
   request.headers['Content-Type'] = 'application/json';
   const session = JSON.parse(localStorage.getItem('user')) || null;
   if (session?.isLogged)
-    request.headers['Authorization'] = `Bearer ${session.token}`;
+    request.headers['Authorization']  = `Bearer ${session.token}`;
   return request;
 };
 
