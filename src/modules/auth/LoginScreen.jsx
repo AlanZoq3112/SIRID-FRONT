@@ -8,7 +8,6 @@ import * as yup from "yup";
 import { Card, Container, Figure, Row, Col, Form } from "react-bootstrap";
 import Alert from "./../../shared/plugins/alert";
 import { Button } from "primereact/button";
-
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export const LoginScreen = () => {
@@ -118,9 +117,10 @@ export const LoginScreen = () => {
                           className="form-control"
                         />
                         <button
-                          className="btn btn-outline-secondary"
+                          className="btn btn-outline-secondary btn-sm" // agregamos la clase "btn-sm"
                           type="button"
                           onClick={togglePasswordVisibility}
+                          style={{ width: "50px" }} // definimos un ancho personalizado de 50px
                         >
                           {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>

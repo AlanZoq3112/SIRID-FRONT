@@ -1,19 +1,16 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {getStorage} from 'firebase/storage'
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import {getAuth}from "firebase/auth"
+import {getFirestore} from "firebase/firestore"
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD5irBFnKEHX0yP1gzxDe9aWvSzpNAcugk",
-  authDomain: "imagenessirid.firebaseapp.com",
-  projectId: "imagenessirid",
-  storageBucket: "imagenessirid.appspot.com",
-  messagingSenderId: "94551123740",
-  appId: "1:94551123740:web:84ae7fd7bb5bf29bbd3cd9"
+  apiKey: "AIzaSyD5TN3qulII5RMXwJRkhCNzs8L8jKBS3Wk",
+  authDomain: "siridchat.firebaseapp.com",
+  projectId: "siridchat",
+  storageBucket: "siridchat.appspot.com",
+  messagingSenderId: "40914305724",
+  appId: "1:40914305724:web:76deef7be34adae22a86b9"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const storage = getStorage(app);
+export const auth =getAuth(app);
+export const db=getFirestore(app)

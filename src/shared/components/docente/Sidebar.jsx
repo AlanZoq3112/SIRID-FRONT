@@ -47,8 +47,8 @@ const Sidebar = ({ children }) => {
         images.push( base64.split(","))
       
 
-        setImages((e) => e, arrayAuxiliar);
-        setPreImage(arrayAuxiliar[1]);
+        // setImages((e) => e, arrayAuxiliar);
+        // setPreImage(arrayAuxiliar[1]);
       };
 
 

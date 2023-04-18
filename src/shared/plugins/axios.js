@@ -1,7 +1,7 @@
 import instance from 'axios';
 
 const AxiosClient = instance.create({
-  baseURL: 'http://44.199.95.221:8090/api-sirid',
+  baseURL: 'http://localhost:8090/api-sirid',
 });
 
 const requestHandler = (request) => {

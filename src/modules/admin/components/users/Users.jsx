@@ -64,21 +64,21 @@ const Users = () => {
     });
   };
 
-  const descargarPdfEstadisticas = () => {
-    AxiosClient({
-      url: `/reports/statistics/pdf/`,
-      responseType: "blob",
-    }).then((response) => {
-      const url = window.URL.createObjectURL(response);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "Estadisticas de las incidencias";
+  // const descargarPdfEstadisticas = () => {
+  //   AxiosClient({
+  //     url: `/reports/statistics/pdf/`,
+  //     responseType: "blob",
+  //   }).then((response) => {
+  //     const url = window.URL.createObjectURL(response);
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.download = "Estadisticas de las incidencias";
 
-      setTimeout(() => {
-        link.click();
-      }, 200);
-    });
-  };
+  //     setTimeout(() => {
+  //       link.click();
+  //     }, 200);
+  //   });
+  // };
 
   const filteredUsuarios = usuarios.filter(
     (usuarios) =>
@@ -413,32 +413,7 @@ const Users = () => {
             </Card>
           </TabPanel>
 
-          <TabPanel
-            header="Estadisticas de las inbcidencias"
-            leftIcon="pi pi-chart-bar mr-2"
-          >
-            <Container>
-              <Row>
-                <Col sm={8}>
-                  {" "}
-                  <p>
-                    En este documento se encunetran las Estadisticas generales
-                    en Graficas de todas las Incidencias
-                  </p>
-                </Col>
-                <Col sm={4} className="d-flex justify-content-center align-items-center">
-                <ButtonCircle
-                      type={"btn btn-outline-success"}
-                      icon="download"
-                      size={50}
-                      onClick={() => {
-                        descargarPdfEstadisticas();
-                      }}
-                    />
-                </Col>
-              </Row>
-            </Container>
-          </TabPanel>
+          
         </TabView>
       </div>
     </>

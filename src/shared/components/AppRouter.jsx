@@ -29,6 +29,8 @@ import Users from "./../../modules/admin/components/users/Users";
 import IncidenciasPendientes from "./../../modules/personal_soporte/components/IncidenciasPendientes";
 import ChatSoporte from "../../modules/personal_soporte/components/ChatSoporte";
 
+import Chat from "../../modules/chat/Chat";
+
 export const AppRouter = () => {
   const { user } = useContext(AuthContext);
   return (
@@ -101,7 +103,7 @@ export const AppRouter = () => {
                             />
                             <Route
                               path="/ChatGeneral"
-                              element={<ChatSoporte />}
+                              element={<Chat />}
                             />
                             <Route path="/Perfil" element={<Perfil />} />
                             <Route path="/reset-password" element={<ChangePassword />} />
