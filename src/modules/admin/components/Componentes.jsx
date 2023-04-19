@@ -16,13 +16,13 @@ const Componentes = () => {
           <TabPanel header="Salones">
             <SalonesScreen />
           </TabPanel>
-          <TabPanel header="Areas">
+          <TabPanel header="Áreas">
            <AreasScreen/>
           </TabPanel>
           <TabPanel header="Academias">
            <AcademiasScreen/>
           </TabPanel>
-          <TabPanel header="Tipos de Area">
+          <TabPanel header="Tipos de Áreas">
             <TiposScreen/>
           </TabPanel>
         </TabView>

@@ -115,7 +115,7 @@ export const AreasScreen = () => {
         sortable: true,
     },
     {
-        name: 'Area',
+        name: 'Área',
         cell: (row) => <div>{row.name}</div>,
         sortable: true,
         selector: (row) => row.name
@@ -143,7 +143,7 @@ export const AreasScreen = () => {
     return <Card>
         <Card.Header>
             <Row>
-                <Col>Areas Universitarias</Col>
+                <Col>Áreas Universitarias</Col>
                 <Col className='text-end'>
                     <ButtonCircle
                         type={'btn btn-outline-success'}

@@ -96,7 +96,7 @@ export const EditTiposForm = ({ isOpen, setTipos, onClose, tipo }) => {
         show={isOpen}
         onHide={handleClose}>
         <Modal.Header closeButton>
-            <Modal.Title>Editar Tipo de Salon</Modal.Title>
+            <Modal.Title>Editar Tipo de Salón</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Form onSubmit={form.handleSubmit}>
@@ -104,7 +104,7 @@ export const EditTiposForm = ({ isOpen, setTipos, onClose, tipo }) => {
                     <Form.Label>Nombre</Form.Label>
                     <FormControl
                         name='name'
-                        placeholder='Tipo de salon'
+                        placeholder='Tipo de salón'
                         value={form.values.name}
                         onChange={form.handleChange}
                     />

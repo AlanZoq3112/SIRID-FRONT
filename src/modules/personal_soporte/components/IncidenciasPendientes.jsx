@@ -154,7 +154,7 @@ const IncidenciasPendientes = () => {
       ),
     },
     {
-      name: "Acción",
+      name: "Finalizar",
       cell: (row) => (
         <>
           <ButtonCircle
@@ -296,7 +296,7 @@ const IncidenciasPendientes = () => {
                   data={filteredPendientes}
                   progressPending={isLoading}
                   progressComponent={<Loading />}
-                  noDataComponent={"Sin incidencias registradas"}
+                  noDataComponent={"Sin incidencias pendientes"}
                   pagination
                   paginationComponentOptions={options}
                   subHeader
@@ -341,7 +341,7 @@ const IncidenciasPendientes = () => {
                   data={filteredActivas}
                   progressPending={isLoading}
                   progressComponent={<Loading />}
-                  noDataComponent={"Sin incidencias registradas"}
+                  noDataComponent={"Sin incidencias en Curso"}
                   pagination
                   paginationComponentOptions={options}
                   subHeader
@@ -386,7 +386,7 @@ const IncidenciasPendientes = () => {
                   data={filteredConcluido}
                   progressPending={isLoading}
                   progressComponent={<Loading />}
-                  noDataComponent={"Sin incidencias registradas"}
+                  noDataComponent={"Sin incidencias Concluidas"}
                   pagination
                   paginationComponentOptions={options}
                   subHeader

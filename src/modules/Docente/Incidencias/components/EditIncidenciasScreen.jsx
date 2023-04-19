@@ -1,5 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext} from "react";
 import { useFormik } from "formik";
+import { db } from "../../../chat/firebaseConfig ";
+import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
+import Message from "./../../../chat/Message";
+import SendMessage from "./../../../chat/SendMessage";
+import { AuthContext } from "../../../auth/authContext";
 import {
   Button,
   Col,
@@ -31,6 +36,33 @@ export const EditIncidenciasScreen = ({
   const [usuarios, setUsuarios] = useState([]);
   const [estados, setEstados] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  //Chat
+  const { user } = useContext(AuthContext);
+  const scroll = useRef();
+  const name = user ? user.user.user.name : "Name User"; //obtener el correo del usuario logeado (con el token)
+
+  const [messages, setMessages] = useState([]); //aqui se guardan los mensajes que devuelve la bd
+
+  useEffect(() => {
+    const newQuery = query(collection(db, "messages"), orderBy("timestamp")); //mandomos a traer los elemetos de la colection "messages"(asi se llama la coleccion en firebase)
+
+    const unsubscribe = onSnapshot(newQuery, (querySpanshot) => {
+      let currentMessages = []; //aqui se guardan (temporalmente) los mensajes que recibimos
+      querySpanshot.forEach((item) => {
+        // recibimos los datos en JSON (creo) y lo recorremos (elemento por elemento)
+        currentMessages.push({ content: item.data(), id: item.id }); //guardamos los datos en el array temporal
+      });
+      setMessages(currentMessages); //guardamos todos  ("permanente" hasta que se actualice la base) los elementos recibidos al array local para poderlos visualizar
+    });
+    return unsubscribe;
+  }, []);
+
+  const [show, setShow] = useState(false);
+
+  const cerrarChat = () => setShow(false);
+  const mostrarChat = () => setShow(true);
+
   //Obtener Salones
   const getSalones = async () => {
     try {
@@ -229,7 +261,7 @@ export const EditIncidenciasScreen = ({
             <Row>
               <Col>
                 <Form.Group className="mb-3">
-                  <Form.Label>Titulo</Form.Label>
+                  <Form.Label>Título</Form.Label>
                   <FormControl
                     disabled
                     name="title"
@@ -292,12 +324,12 @@ export const EditIncidenciasScreen = ({
           </Container>
 
           <Form.Group className="mb-3">
-            <Form.Label>Descripccion</Form.Label>
+            <Form.Label>Descripción</Form.Label>
             <FormControl
               disabled
               as="textarea"
               name="description"
-              placeholder="Descripccion"
+              placeholder="Descripcción"
               value={form.values.description}
               onChange={form.handleChange}
             />
@@ -310,11 +342,11 @@ export const EditIncidenciasScreen = ({
             <Row>
               <Col>
                 <Form.Group className="mb-3">
-                  <Form.Label>Fecha de Creacion</Form.Label>
+                  <Form.Label>Fecha de Creación</Form.Label>
                   <FormControl
                     disabled
                     name="created_at"
-                    placeholder="Fecha de Creaccion"
+                    placeholder="Fecha de Creación"
                     value={form.values.created_at}
                     onChange={form.handleChange}
                   />
@@ -325,11 +357,11 @@ export const EditIncidenciasScreen = ({
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-                  <Form.Label>Ultima Modificaccion</Form.Label>
+                  <Form.Label>Ultima Modificación</Form.Label>
                   <FormControl
                     disabled
                     name="last_modify"
-                    placeholder="Fecha de Creaccion"
+                    placeholder="Fecha de Creación"
                     value={form.values.last_modify}
                     onChange={form.handleChange}
                   />
@@ -445,7 +477,7 @@ export const EditIncidenciasScreen = ({
           <Row>
             <Col>
             <Form.Group className="mb-3">
-                <Form.Label>Divicion Academica</Form.Label>
+                <Form.Label>Division Academica</Form.Label>
                 <Form.Control
                   disabled
                   as="select"
@@ -495,6 +527,34 @@ export const EditIncidenciasScreen = ({
           
           <Form.Group className="mb-3">
             <Row>
+            {form.values.status.name === "Activo" && (
+  <Col className="text-start col-sm-12 col-md-6 col-lg-4">
+    <Button
+      className="me-2"
+      variant="outline-primary"
+      onClick={mostrarChat}
+    >
+      <FeatherIcon icon="message-circle" />
+    </Button>
+    <Modal size="lg" show={show} onHide={cerrarChat}>
+      <Modal.Header closeButton>
+        <Modal.Title>Chat</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <section className="chat-content">
+          {messages &&
+            messages.map((item) => (
+              <Message key={item.id} message={item.content} />
+            ))}
+          {user && <SendMessage scroll={scroll} />}
+          <span ref={scroll}></span>
+        </section>
+      </Modal.Body>
+    </Modal>
+  </Col>
+)}
+
+
               <Col className="text-end">
                 <Button
                   className="me-2"

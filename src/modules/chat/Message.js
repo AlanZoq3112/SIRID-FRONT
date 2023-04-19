@@ -5,7 +5,6 @@ const Message = ({ message }) => {
    
     const { user } = useContext(AuthContext);
     const name = user ? user.user.email : "Name User";//Obtener el correo del usuario logeado (TOKEN)
-    console.log(user.user.email)
     let newStyles = 'message';
         if (message.uid === user.user.email ) {//varificamos el correo de quien esta logeado con el correo de quien manda el mensaje  
             newStyles = 'my-message';            //asignamos los estilos que nosotros lo mandamos

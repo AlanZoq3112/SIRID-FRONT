@@ -168,7 +168,7 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
       size="lg"
     >
       <Modal.Header closeButton>
-        <Modal.Title>Registrar un Nuevo Usuarios</Modal.Title>
+        <Modal.Title>Registrar un Nuevo Usuario</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={form.handleSubmit}>
@@ -310,7 +310,7 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
             <Row>
               <Col>
                 <Form.Group className="mb-3">
-                  <Form.Label>Correo Electronico</Form.Label>
+                  <Form.Label>Correo Electrónico</Form.Label>
                   <FormControl
                     required
                     name="correo_electronico"

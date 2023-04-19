@@ -218,13 +218,13 @@ const Users = () => {
         selector: (row) => row.roles.name,
       },
       {
-        name: "Divicion Academica",
+        name: "Divición Académica",
         cell: (row) => <div>{row.academicDivision.name}</div>,
         sortable: true,
         selector: (row) => row.academicDivision.name,
       },
       {
-        name: "Estado",
+        name: "Status",
         cell: (row) =>
           row.status ? (
             <Badge bg="success">Activo</Badge>
@@ -372,7 +372,7 @@ const Users = () => {
             <Card>
               <Card.Header>
                 <Row>
-                  <Col>Personal de Soporte Tecnico</Col>
+                  <Col>Personal de Soporte Técnico</Col>
                   <Col className="text-end">
                     <ButtonCircle
                       type={"btn btn-outline-success"}

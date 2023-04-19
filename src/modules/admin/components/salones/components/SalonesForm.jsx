@@ -151,7 +151,7 @@ export const SalonesForm = ({ isOpen, setSalones, onClose }) => {
                         <Form.Label>Nombre</Form.Label>
                         <FormControl
                             name='name'
-                            placeholder='Nombre del salon'
+                            placeholder='Nombre del salón'
                             value={form.values.name}
                             onChange={form.handleChange}
                         />
@@ -169,7 +169,7 @@ export const SalonesForm = ({ isOpen, setSalones, onClose }) => {
                             value={form.values.area.id}
                             onChange={form.handleChange}
                         >
-                            <option>Seleccion de Area</option>
+                            <option>Seleccion de Área</option>
                             {areas.map(area => (
                                 <option
                                     key={area.id}
@@ -188,7 +188,7 @@ export const SalonesForm = ({ isOpen, setSalones, onClose }) => {
                             value={form.values.type.id}
                             onChange={form.handleChange}
                         >
-                            <option>Seleccion de Tipo de Salon</option>
+                            <option>Seleccion de Tipo de Salón</option>
                             {types.map(type => (
                                 <option
                                     key={type.id}

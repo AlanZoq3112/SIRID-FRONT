@@ -223,10 +223,10 @@ export const EditUserForm = ({ isOpen, setUsuarios, onClose, usuarios }) => {
           </Form.Group>
           {/* Correo Electronico */}
           <Form.Group className="mb-3">
-            <Form.Label>Correo Electronico</Form.Label>
+            <Form.Label>Correo Electrónico</Form.Label>
             <FormControl
               name="correoElectronico"
-              placeholder="Correo Electronico"
+              placeholder="Correo Electrónico"
               value={form.values.correo_electronico}
               onChange={form.handleChange}
               disabled
@@ -259,7 +259,7 @@ export const EditUserForm = ({ isOpen, setUsuarios, onClose, usuarios }) => {
               value={form.values.role}
               onChange={form.handleChange}
             >
-              <option>Seleccion de Rol de usuario</option>
+              <option>Selección de Rol de usuario</option>
               {roles.map((rol) => (
                 <option
                   key={rol.id}

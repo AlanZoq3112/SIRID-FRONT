@@ -10,7 +10,7 @@ import { AiOutlineInfoCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { BsAlarm } from "react-icons/bs";
 import { TabView, TabPanel } from "primereact/tabview";
 import { AuthContext } from "./../../auth/authContext";
-
+import Toast from "react-bootstrap/Toast";
 import Alert, {
   confirmMsg,
   confirmTitle,
@@ -41,21 +41,24 @@ const IncidenciasScreen = () => {
   );
   //Incidencias Pendientes
   const filteredPendientes = incidencias.filter(
-    (incidencias) => incidencias.docente.id === user.user.user.id &&
+    (incidencias) =>
+      incidencias.docente.id === user.user.user.id &&
       incidencias.title.toLowerCase().includes(filterText.toLowerCase()) &&
       incidencias.status.name === "Pendiente"
   );
 
   //Incidencias Activas
   const filteredActivas = incidencias.filter(
-    (incidencias) => incidencias.docente.id === user.user.user.id &&
+    (incidencias) =>
+      incidencias.docente.id === user.user.user.id &&
       incidencias.title.toLowerCase().includes(filterText.toLowerCase()) &&
       incidencias.status.name === "Activo"
   );
 
   //Incidencias concluidas
   const filteredConcluidas = incidencias.filter(
-    (incidencias) => incidencias.docente.id === user.user.user.id &&
+    (incidencias) =>
+      incidencias.docente.id === user.user.user.id &&
       incidencias.title.toLowerCase().includes(filterText.toLowerCase()) &&
       incidencias.status.name === "Concluido"
   );
@@ -145,7 +148,7 @@ const IncidenciasScreen = () => {
       sortable: true,
     },
     {
-      name: "Titulo",
+      name: "Título",
       cell: (row) => <div>{row.title}</div>,
       sortable: true,
       selector: (row) => row.title,
@@ -158,13 +161,13 @@ const IncidenciasScreen = () => {
     },
 
     {
-      name: "Salon",
+      name: "Salón",
       cell: (row) => <div>{row.classroom.name}</div>,
       sortable: true,
       selector: (row) => row.classroom.name,
     },
     {
-      name: "Area",
+      name: "Área",
       cell: (row) => <div>{row.classroom.area.name}</div>,
       sortable: true,
       selector: (row) => row.classroom.area.name,
@@ -217,6 +220,17 @@ const IncidenciasScreen = () => {
 
   return (
     <>
+      <Toast>
+        <Toast.Header>
+          <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+          <strong className="me-auto">SIRID</strong>
+          <small>Tomar en cuenta</small>
+        </Toast.Header>
+        <Toast.Body>
+          No podras ver los detalles de una incidencia hasta que un personal de
+          soporte sea asignado
+        </Toast.Body>
+      </Toast>
       <div className="card">
         <TabView>
           <TabPanel header="Todas las incidencias" leftIcon="pi pi-copy mr-2">
@@ -277,7 +291,7 @@ const IncidenciasScreen = () => {
                   data={filteredPendientes}
                   progressPending={isLoading}
                   progressComponent={<Loading />}
-                  noDataComponent={"Sin incidencias registradas"}
+                  noDataComponent={"Sin incidencias pendientes"}
                   pagination
                   paginationComponentOptions={options}
                   subHeader
@@ -313,7 +327,7 @@ const IncidenciasScreen = () => {
                   data={filteredActivas}
                   progressPending={isLoading}
                   progressComponent={<Loading />}
-                  noDataComponent={"Sin incidencias registradas"}
+                  noDataComponent={"Sin incidencias en curso"}
                   pagination
                   paginationComponentOptions={options}
                   subHeader
@@ -349,7 +363,7 @@ const IncidenciasScreen = () => {
                   data={filteredConcluidas}
                   progressPending={isLoading}
                   progressComponent={<Loading />}
-                  noDataComponent={"Sin incidencias registradas"}
+                  noDataComponent={"Sin incidencias concluidas"}
                   pagination
                   paginationComponentOptions={options}
                   subHeader

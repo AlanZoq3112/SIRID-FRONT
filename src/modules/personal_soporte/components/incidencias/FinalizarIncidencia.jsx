@@ -8,6 +8,7 @@ import {
   Modal,
   FormControl,
   Container,
+  Toast,
 } from "react-bootstrap";
 import AxiosClient from "./../../../../shared/plugins/axios";
 import FeatherIcon from "feather-icons-react";
@@ -89,7 +90,6 @@ export const FinalizarIncidencia = ({
   useEffect(() => {
     getUsuarios();
   }, []);
-
 
   const form = useFormik({
     initialValues: {
@@ -175,7 +175,6 @@ export const FinalizarIncidencia = ({
       });
     },
   });
-  
 
   React.useMemo(() => {
     const {
@@ -216,12 +215,25 @@ export const FinalizarIncidencia = ({
       onHide={handleClose}
     >
       <Modal.Header closeButton>
-        <Modal.Title>
-          Finalizar Incidencias
-        </Modal.Title>
+        <Modal.Title>Finalizar Incidencias</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        
         <Form onSubmit={form.handleSubmit}>
+        <Toast>
+                    <Toast.Header>
+                      <img
+                        src="holder.js/20x20?text=%20"
+                        className="rounded me-2"
+                        alt=""
+                      />
+                      <strong className="me-auto">SIRID</strong>
+                      <small>Tomar en cuenta</small>
+                    </Toast.Header>
+                    <Toast.Body>
+                     La incidencia solo puede ser finalizada si su status está como Activo
+                    </Toast.Body>
+                  </Toast>
           <Container>
             <Row>
               <Col>
@@ -232,7 +244,7 @@ export const FinalizarIncidencia = ({
                     placeholder="Titulo"
                     value={form.values.title}
                     onChange={form.handleChange}
-                    hidden 
+                    hidden
                   />
                   {form.errors.title && (
                     <span classname="error-text">{form.errors.title}</span>
@@ -241,9 +253,8 @@ export const FinalizarIncidencia = ({
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-                 
                   <Form.Control
-                  hidden 
+                    hidden
                     disabled
                     as="select"
                     name="status.id"
@@ -265,9 +276,8 @@ export const FinalizarIncidencia = ({
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-                 
                   <Form.Control
-                  hidden 
+                    hidden
                     disabled
                     as="select"
                     name="classroom.id"
@@ -291,9 +301,8 @@ export const FinalizarIncidencia = ({
           </Container>
 
           <Form.Group className="mb-3">
-            
             <FormControl
-            hidden 
+              hidden
               disabled
               as="textarea"
               name="description"
@@ -310,9 +319,8 @@ export const FinalizarIncidencia = ({
             <Row>
               <Col>
                 <Form.Group className="mb-3">
-                 
                   <FormControl
-                  hidden 
+                    hidden
                     disabled
                     name="created_at"
                     placeholder="Fecha de Creaccion"
@@ -326,9 +334,8 @@ export const FinalizarIncidencia = ({
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-                  
                   <FormControl
-                  hidden 
+                    hidden
                     disabled
                     name="last_modify"
                     placeholder="Fecha de Creaccion"
@@ -344,9 +351,8 @@ export const FinalizarIncidencia = ({
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-           
                   <FormControl
-                  hidden 
+                    hidden
                     disabled
                     name="finish_at"
                     placeholder="Fecha de Finalización"
@@ -368,7 +374,7 @@ export const FinalizarIncidencia = ({
               <Col>
                 <Form.Group className="mb-3">
                   <Form.Control
-                  hidden 
+                    hidden
                     disabled
                     as="select"
                     name="docente.id"
@@ -390,10 +396,9 @@ export const FinalizarIncidencia = ({
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-                 
                   <Form.Control
-                    hidden 
-                 disabled
+                    hidden
+                    disabled
                     as="select"
                     name="docente.id"
                     value={form.values.docente.id}
@@ -414,9 +419,8 @@ export const FinalizarIncidencia = ({
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-                  
                   <Form.Control
-                  hidden 
+                    hidden
                     disabled
                     as="select"
                     name="docente.id"
@@ -442,9 +446,8 @@ export const FinalizarIncidencia = ({
             <Row>
               <Col>
                 <Form.Group className="mb-3">
-                  
                   <Form.Control
-                  hidden 
+                    hidden
                     disabled
                     as="select"
                     name="docente.id"
@@ -466,9 +469,8 @@ export const FinalizarIncidencia = ({
               </Col>
               <Col>
                 <Form.Group className="mb-3">
-                 
                   <Form.Control
-                  hidden 
+                    hidden
                     disabled
                     as="select"
                     name="docente.id"
@@ -488,30 +490,30 @@ export const FinalizarIncidencia = ({
                   </Form.Control>
                 </Form.Group>
                 <Form.Group className="mb-3">
-              <Col className="text-end">
-             
-                <Button
-                  className="me-2"
-                  variant="outline-danger"
-                  onClick={handleClose}
-                >
-                  <FeatherIcon icon="x" />
-                  &nbsp;Cerrar
-                </Button>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  disabled={
-                    form.values.status.name === "Concluido" || form.values.status.name === "Pendiente"
-                      ? true
-                      : false
-                  }
-                >
-                  Finzalizar
-                </Button>
-              </Col>
-       
-          </Form.Group>
+                 
+                  <Col className="text-end">
+                    <Button
+                      className="me-2"
+                      variant="outline-danger"
+                      onClick={handleClose}
+                    >
+                      <FeatherIcon icon="x" />
+                      &nbsp;Cerrar
+                    </Button>
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      disabled={
+                        form.values.status.name === "Concluido" ||
+                        form.values.status.name === "Pendiente"
+                          ? true
+                          : false
+                      }
+                    >
+                      Finzalizar
+                    </Button>
+                  </Col>
+                </Form.Group>
               </Col>
             </Row>
           </Container>

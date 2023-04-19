@@ -82,15 +82,17 @@
     flex-wrap: wrap;
   
     position: relative;
-  }
-  input[type="text"] {
+  } 
+  */
+   input[type="text"] {
     border: solid 1px #d4d3d3;
     padding: 14px 12px;
     font-size: inherit;
     border-radius: 6px;
     outline: none;
     flex-grow: 6;
-  }
+  } 
+  /*
   form button {
     background-color: #004DFC;
     padding: 15px 0;
@@ -206,3 +208,5 @@
     font-weight: 700;
     color: #000;
   }
+
+  

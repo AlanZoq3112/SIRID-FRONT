@@ -35,7 +35,7 @@ const Perfil = (props) => {
     <Container>
       {showAlert && (
         <Alert variant="success" onClose={handleAlertDismiss} dismissible>
-          Solicitud de Cambio de Contraseña realizada con exito
+          Solicitud de Cambio de Contraseña realizada con éxito
         </Alert>
       )}
       <Row>
@@ -88,7 +88,7 @@ const Perfil = (props) => {
                           <InputText disabled placeholder={user.user.email} />
                         </Col>
                         <Col>
-                          <p>Division Academica:</p>
+                          <p>División Académica:</p>
                           <InputText
                             disabled
                             placeholder={user.user.user.academicDivision.name}
@@ -104,17 +104,15 @@ const Perfil = (props) => {
                       </Row>
                     </Container>
                     <br />
-                    <Container>
+                   
                       <Row>
+                      
+                        
                         <Col className="text-center">
-                          <Button
-                            onClick={setShowChanges}
-                            className="cambiodatos"
-                            size="lg"
-                          >
-                            Solicitar Cambios
-                          </Button>
+                          
                         </Col>
+                        
+                        <Col className="text-center">
                         <Col className="text-center">
                         <Link to="/CambiarContra">
                           <Button
@@ -125,8 +123,9 @@ const Perfil = (props) => {
                           </Button>
                           </Link>
                         </Col>
+                        </Col>
                       </Row>
-                    </Container>
+                    
                   </Col>
                 </Row>
               </Container>

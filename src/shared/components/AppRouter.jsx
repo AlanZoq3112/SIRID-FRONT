@@ -29,7 +29,6 @@ import Users from "./../../modules/admin/components/users/Users";
 import IncidenciasPendientes from "./../../modules/personal_soporte/components/IncidenciasPendientes";
 import ChatSoporte from "../../modules/personal_soporte/components/ChatSoporte";
 
-import Chat from "../../modules/chat/Chat";
 
 export const AppRouter = () => {
   const { user } = useContext(AuthContext);
@@ -72,6 +71,7 @@ export const AppRouter = () => {
                     <Sidebar>
                       <Container style={{ marginTop: "20px" }}>
                         <Routes>
+                        
                           <Route
                             path="/Incidencias"
                             element={<IncidenciasScreen />}
@@ -101,10 +101,7 @@ export const AppRouter = () => {
                               path="/IncidenciasPendientes"
                               element={<IncidenciasPendientes />}
                             />
-                            <Route
-                              path="/ChatGeneral"
-                              element={<Chat />}
-                            />
+                           
                             <Route path="/Perfil" element={<Perfil />} />
                             <Route path="/reset-password" element={<ChangePassword />} />
                             <Route path="/CambiarContra" element={<ForgotPasswordLog />} />

@@ -121,13 +121,13 @@ const SalonesScreen = () => {
       sortable: true,
     },
     {
-      name: "Salon",
+      name: "Salón",
       cell: (row) => <div>{row.name}</div>,
       sortable: true,
       selector: (row) => row.name,
     },
     {
-      name: "Estado",
+      name: "Status",
       cell: (row) =>
         row.status ? (
           <Badge bg="success">Activo</Badge>
@@ -138,7 +138,7 @@ const SalonesScreen = () => {
       selector: (row) => row.status,
     },
     {
-      name: "Area",
+      name: "Área",
       cell: (row) => <div>{row.area.name}</div>,
       sortable: true,
       selector: (row) => row.name,

@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import { FaBars } from "react-icons/fa";
 
 import { AiOutlineUser, AiOutlineHome } from "react-icons/ai";
-import { BsFillChatLeftDotsFill } from "react-icons/bs";
 
 import LogoutButton from '../LogoutButton';
 
@@ -50,13 +49,6 @@ const SoporteSidebar = ({ children }) => {
       path: "/IncidenciasPendientes",
       name: "Incidencias Pendientes",
       icon: <AiOutlineHome />,
-    },
-
-    {
-      className: "chat",
-      path: "/ChatGeneral",
-      name: "Chat",
-      icon: <BsFillChatLeftDotsFill />,
     },
     {
       path: "/Perfil",

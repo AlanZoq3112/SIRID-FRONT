@@ -88,7 +88,7 @@ export const AreasForm = ({ isOpen, setAreas, onClose }) => {
         show={isOpen}
         onHide={handleClose}>
         <Modal.Header closeButton>
-            <Modal.Title>Registrar Area</Modal.Title>
+            <Modal.Title>Registrar Área</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Form onSubmit={form.handleSubmit}>

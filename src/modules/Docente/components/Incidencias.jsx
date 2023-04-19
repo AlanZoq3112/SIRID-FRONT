@@ -113,19 +113,19 @@ const Tncidencias = () => {
         sortable: true,
     },
     {
-        name: 'Titulo',
+        name: 'Ti¿¿¿¿¿0ítulo',
         cell: (row) => <div>{row.title}</div>,
         sortable: true,
         selector: (row) => row.title
     },
     {
-        name: 'Descripcion',
+        name: 'Descripción',
         cell: (row) => <div>{row.description}</div> ,
         sortable: true,
         selector: (row) => row.description
     },
     {
-        name: 'Area',
+        name: 'Área',
         cell: (row) => <div>{row.segundoApellido}</div> ,
         sortable: true,
         selector: (row) => row.segundoApellido

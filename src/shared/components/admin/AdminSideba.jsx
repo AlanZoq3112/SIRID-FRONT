@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineUser, AiOutlineHome } from "react-icons/ai";
 import { FiUsers } from "react-icons/fi";
-import { BsFillChatLeftDotsFill } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 
@@ -53,12 +52,7 @@ const AdminSidebar = ({ children }) => {
       icon: <AiOutlineHome />,
     },
 
-    {
-      className: "chat",
-      path: "/ChatAdmin",
-      name: "Chat",
-      icon: <BsFillChatLeftDotsFill />,
-    },
+   
     {
       path: "/Users",
       name: "Usuarios",

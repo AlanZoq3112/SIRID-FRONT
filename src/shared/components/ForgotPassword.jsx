@@ -124,12 +124,12 @@ const ForgotPassword = ({ setUsuarios, onClose }) => {
                         <Form onSubmit={form.handleSubmit}>
                           <Form.Group className="form-outline mb-4">
                             <Form.Group className="mb-3">
-                              <Form.Label>Correo Electronico</Form.Label>
+                              <Form.Label>Correo Electrónico</Form.Label>
                               
                               <FormControl
                             
                                 name="correo_electronico"
-                                placeholder="Correo Electronico para la restauración"
+                                placeholder="Correo Electrónico para la restauración"
                                 value={form.values.correo_electronico}
                                 onChange={form.handleChange}
                               />

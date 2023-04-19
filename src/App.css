@@ -14,7 +14,7 @@ main{
 .sidebars{
   background:#002e60 ;
   color: #fff;
-  height: 100vh;
+  height: 140vh;
   width: 200px;
   transition: all 0.5s;
 }
@@ -292,4 +292,12 @@ button[type="submit"] {
   color: #fff;
   font-weight: bold;
   padding: 10px 20px;
+}
+
+.chat-modal {
+  display: none;
+}
+
+.chat-modal.show {
+  display: block;
 }

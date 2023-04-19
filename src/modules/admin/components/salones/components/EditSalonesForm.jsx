@@ -161,7 +161,7 @@ export const EditSalonesForm = ({ isOpen, setSalones, onClose, salones }) => {
       onHide={handleClose}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Editar Salon</Modal.Title>
+        <Modal.Title>Editar SalÓn</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={form.handleSubmit}>

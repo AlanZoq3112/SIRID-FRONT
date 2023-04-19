@@ -1,16 +1,21 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useFormik } from "formik";
+import { db } from "../../../chat/firebaseConfig ";
+import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
+import Message from "./../../../chat/Message";
+import SendMessage from "./../../../chat/SendMessage";
 import {
   Button,
   Col,
   Row,
   Form,
-  Modal,
   FormControl,
   Container,
-  Image,
+  Modal,
+  Carousel,
+  Toast,
 } from "react-bootstrap";
-import * as yup from "yup";
+
 import AxiosClient from "./../../../../shared/plugins/axios";
 import FeatherIcon from "feather-icons-react";
 import { AuthContext } from "../../../auth/authContext";
@@ -34,6 +39,31 @@ export const DetallesIncidencia = ({
   const [usuarios, setUsuarios] = useState([]);
   const [estados, setEstados] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  //Chat
+  const scroll = useRef();
+  const name = user ? user.user.user.name : "Name User"; //obtener el correo del usuario logeado (con el token)
+
+  const [messages, setMessages] = useState([]); //aqui se guardan los mensajes que devuelve la bd
+
+  useEffect(() => {
+    const newQuery = query(collection(db, "messages"), orderBy("timestamp")); //mandomos a traer los elemetos de la colection "messages"(asi se llama la coleccion en firebase)
+
+    const unsubscribe = onSnapshot(newQuery, (querySpanshot) => {
+      let currentMessages = []; //aqui se guardan (temporalmente) los mensajes que recibimos
+      querySpanshot.forEach((item) => {
+        // recibimos los datos en JSON (creo) y lo recorremos (elemento por elemento)
+        currentMessages.push({ content: item.data(), id: item.id }); //guardamos los datos en el array temporal
+      });
+      setMessages(currentMessages); //guardamos todos  ("permanente" hasta que se actualice la base) los elementos recibidos al array local para poderlos visualizar
+    });
+    return unsubscribe;
+  }, []);
+
+  const [show, setShow] = useState(false);
+
+  const cerrarChat = () => setShow(false);
+  const mostrarChat = () => setShow(true);
+
   //Obtener Salones
   const getSalones = async () => {
     try {
@@ -180,9 +210,11 @@ export const DetallesIncidencia = ({
         id: 0,
         name: "",
       },
-      resourcesList: [{
-        url: '',
-      }]
+      resourcesList: [
+        {
+          url: "",
+        },
+      ],
     },
     onSubmit: async (values) => {
       Alert.fire({
@@ -262,9 +294,9 @@ export const DetallesIncidencia = ({
       created_at,
       last_modify,
       finish_at,
-      resourcesList
+      resourcesList,
     } = incidencias;
-    
+
     form.values.id = id;
     form.values.title = title;
     form.values.status = status;
@@ -275,11 +307,12 @@ export const DetallesIncidencia = ({
     form.values.created_at = created_at;
     form.values.last_modify = last_modify;
     form.values.finish_at = finish_at;
-    form.values.resourcesList = resourcesList
-
+    form.values.resourcesList = resourcesList;
   }, [incidencias]);
-  
-  const resourceUrls = form.values.resourcesList.map(resource => resource.url);
+
+  const resourceUrls = form.values.resourcesList.map(
+    (resource) => resource.url
+  );
   console.log("Resource URLs fuera del:", resourceUrls);
   const handleClose = () => {
     form.resetForm();
@@ -298,6 +331,22 @@ export const DetallesIncidencia = ({
         <Modal.Title>Detalles de la Incidencia</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <Toast>
+          <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">SIRID</strong>
+            <small>Tomar en cuenta</small>
+          </Toast.Header>
+          <Toast.Body>
+            Las incidencias solo pueden ser atendidas si su status es
+            "Pendiente"
+          </Toast.Body>
+        </Toast>
+        <br />
         <Form onSubmit={form.handleSubmit}>
           <Container>
             <Row>
@@ -567,13 +616,23 @@ export const DetallesIncidencia = ({
           </Container>
           <Container>
             <Row>
-            <center>
+              <center>
                 <h4>Evidencias</h4>
               </center>
             </Row>
             <Row>
               <Col>
-                      <Image height="200px" src={resourceUrls}></Image>
+                <Carousel>
+                  {resourceUrls.map((element) => (
+                    <Carousel.Item>
+                      <img
+                        className="d-block w-100"
+                        src={element}
+                        alt="First slide"
+                      />
+                    </Carousel.Item>
+                  ))}
+                </Carousel>
               </Col>
             </Row>
           </Container>
@@ -617,9 +676,36 @@ export const DetallesIncidencia = ({
               </Col>
             </Row>
           </Container>
-                    
+
           <Form.Group className="mb-3">
             <Row>
+              {form.values.status.name === "Activo" && (
+                <Col className="text-start">
+                  <Button
+                    className="me-2"
+                    variant="outline-primary"
+                    onClick={mostrarChat}
+                  >
+                    <FeatherIcon icon="message-circle" />
+                  </Button>
+                  <Modal size="lg" show={show} onHide={cerrarChat}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Chat</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <section className="chat-content">
+                        {messages &&
+                          messages.map((item) => (
+                            <Message key={item.id} message={item.content} />
+                          ))}
+                        {user && <SendMessage scroll={scroll} />}
+                        <span ref={scroll}></span>
+                      </section>
+                    </Modal.Body>
+                  </Modal>
+                </Col>
+              )}
+
               <Col className="text-end">
                 <Button
                   className="me-2"
@@ -633,7 +719,9 @@ export const DetallesIncidencia = ({
                   variant="primary"
                   type="submit"
                   disabled={
-                    form.values.status.name === "Concluido" ? true : false
+                    form.values.status.name === "Concluido"
+                      ? true
+                      : form.values.status.name === "Activo"
                   }
                 >
                   Atender

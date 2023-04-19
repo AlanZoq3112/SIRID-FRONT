@@ -135,10 +135,10 @@ export const ChangePassword = () => {
                         <Form onSubmit={form.handleSubmit}>
                           <Form.Group className="form-outline mb-4">
                             <Form.Group className="mb-3">
-                              <Form.Label>Correo Electronico</Form.Label>
+                              <Form.Label>Correo Electrónico</Form.Label>
                               <FormControl
                                 name="correoElectronico"
-                                placeholder="Correo Electronico"
+                                placeholder="Correo Electrónico"
                                 value={form.values.correo_electronico}
                                 onChange={form.handleChange}
                                 disabled
@@ -219,7 +219,7 @@ export const ChangePassword = () => {
           sistema o se ha restablecido tu contraseña. Por seguridad, te pedimos
           amablemente que cambies tu contraseña. Nuestro sistema no te permitirá
           realizar ninguna acción hasta que lo hagas. Una vez echo lo anterior
-          ya podras iniciar sesion con tu contraseña nueva.
+          ya podras iniciar sesión con tu contraseña nueva.
         </p>
       </Dialog>
     </>

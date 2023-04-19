@@ -26,9 +26,6 @@ const SendMessage = ({ scroll }) => {
     const displayName = user.user.email ? user.user.email : "Usuario Anónimo";
 
     const  uid  = user.user.email; // obtenemos el identificador del del mensaje y el nombre del usuario logeadp
-    console.log("Input:", input);
-    console.log("displayName:", displayName);
-    console.log("uid", uid)
 
     await addDoc(collection(db, "messages"), {
       text: input,
@@ -53,7 +50,7 @@ const SendMessage = ({ scroll }) => {
   };
 
   return (
-    <form
+    <form className="inputchat"
       onSubmit={
         sendMessage
       } /*cada que se preiona el boton de enbiar llama a la funcion "sendMessage" (esta arriba)*/
