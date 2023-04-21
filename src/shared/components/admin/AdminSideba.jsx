@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineUser, AiOutlineHome } from "react-icons/ai";
+import {FaClipboardList} from "react-icons/fa"
+import {FcStatistics} from "react-icons/fc"
 import { FiUsers } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
@@ -47,22 +49,31 @@ const AdminSidebar = ({ children }) => {
   //Son los items del sisebar
   const menuItem = [
     {
+      path: "/IncidenciasPendientes",
+      name: "Incidencias Pendientes",
+      icon: <FaClipboardList />,
+    },
+    {
       path: "/Componentes",
       name: "Componentes",
       icon: <AiOutlineHome />,
     },
-
-   
     {
       path: "/Users",
       name: "Usuarios",
       icon: <FiUsers />,
     },
     {
+      path: "/Estadisticas",
+      name: "Estadisticas",
+      icon: <FcStatistics/>
+    },
+    {
       path: "/Perfil",
       name: "Perfil",
       icon: <AiOutlineUser />,
     },
+   
   ];
   return (
     <div className="contenedor">

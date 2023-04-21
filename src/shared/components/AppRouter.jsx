@@ -57,7 +57,7 @@ export const AppRouter = () => {
                           />
                           <Route path="/Users" element={<Users />} />
                           <Route path="/Perfil" element={<Perfil />} />
-
+                          <Route path="/IncidenciasPendientes" element={<IncidenciasPendientes />}/>
                           <Route path="/reset-password" element={<ChangePassword />} />
 
                           <Route path="/CambiarContra" element={<ForgotPasswordLog />} />
@@ -97,11 +97,7 @@ export const AppRouter = () => {
                       <SoporteSidebar>
                         <Container style={{ marginTop: "20px" }}>
                           <Routes>
-                            <Route
-                              path="/IncidenciasPendientes"
-                              element={<IncidenciasPendientes />}
-                            />
-                           
+                            <Route path="/IncidenciasPendientes" element={<IncidenciasPendientes />}/>                 
                             <Route path="/Perfil" element={<Perfil />} />
                             <Route path="/reset-password" element={<ChangePassword />} />
                             <Route path="/CambiarContra" element={<ForgotPasswordLog />} />

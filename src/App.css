@@ -5,6 +5,7 @@
 }
 .contenedor{
   display: flex;
+  overflow: hidden; /* No se permite scroll en el contenedor */
 }
 
 main{
@@ -12,13 +13,13 @@ main{
   padding: 20px;
 }
 .sidebars{
+  position: sticky;
   background:#002e60 ;
   color: #fff;
-  height: 140vh;
-  width: 200px;
+  height: 100vh;
+  width: 250px;
   transition: all 0.5s;
 }
-
 
 .top_sections{
   display: flex;
@@ -200,8 +201,7 @@ main{
 }
 
 body {
-  background-image: url('https://firebasestorage.googleapis.com/v0/b/carsibb-eb9b3.appspot.com/o/portada%20fondo%20SIRID.png?alt=media&token=b33ab736-f674-4268-9884-071e92ccb230');
-  background-size: cover;
+  background-color: #dce2e9;
 }
 
 .btn-primario {

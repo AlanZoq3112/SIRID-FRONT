@@ -64,21 +64,22 @@ const Users = () => {
     });
   };
 
-  // const descargarPdfEstadisticas = () => {
-  //   AxiosClient({
-  //     url: `/reports/statistics/pdf/`,
-  //     responseType: "blob",
-  //   }).then((response) => {
-  //     const url = window.URL.createObjectURL(response);
-  //     const link = document.createElement("a");
-  //     link.href = url;
-  //     link.download = "Estadisticas de las incidencias";
 
-  //     setTimeout(() => {
-  //       link.click();
-  //     }, 200);
-  //   });
-  // };
+   const descargarPdfEstadisticas = () => {
+     AxiosClient({
+       url: `/reports/statistics/pdf/`,
+       responseType: "blob",
+     }).then((response) => {
+       const url = window.URL.createObjectURL(response);
+       const link = document.createElement("a");
+       link.href = url;
+       link.download = "Estadisticas de las incidencias";
+
+       setTimeout(() => {
+         link.click();
+       }, 200);
+     });
+   };
 
   const filteredUsuarios = usuarios.filter(
     (usuarios) =>
@@ -329,6 +330,17 @@ const Users = () => {
                 <Row>
                   <Col>Docentes</Col>
                   <Col className="text-end">
+                  <ButtonCircle
+                      type={"btn btn-outline-success"}
+                      onClick={() => setIsOpen(true)}
+                      icon="user-plus"
+                      size={16}
+                    />
+                    <UserForm
+                      isOpen={isOpen}
+                      onClose={() => setIsOpen(false)}
+                      setUsuarios={setUsuarios}
+                    />
                     <ButtonCircle
                       type={"btn btn-outline-success"}
                       icon="download"
@@ -337,6 +349,7 @@ const Users = () => {
                         descargarPdfDocentes();
                       }}
                     />
+                    
 
                     {selectedUsuarios && (
                       <EditUserForm
@@ -374,6 +387,17 @@ const Users = () => {
                 <Row>
                   <Col>Personal de Soporte Técnico</Col>
                   <Col className="text-end">
+                  <ButtonCircle
+                      type={"btn btn-outline-success"}
+                      onClick={() => setIsOpen(true)}
+                      icon="user-plus"
+                      size={16}
+                    />
+                    <UserForm
+                      isOpen={isOpen}
+                      onClose={() => setIsOpen(false)}
+                      setUsuarios={setUsuarios}
+                    />
                     <ButtonCircle
                       type={"btn btn-outline-success"}
                       icon="download"
@@ -413,6 +437,7 @@ const Users = () => {
             </Card>
           </TabPanel>
 
+        
           
         </TabView>
       </div>
