@@ -20,6 +20,21 @@ export default function Grafics() {
 
   const [data, setData] = useState(null);
 
+
+  const dateFormat = (date_start) => {
+    const fecha = new Date(date_start);
+    const dia = fecha.getUTCDate();
+    const mes = fecha.getUTCMonth() + 1;
+    const anio = fecha.getUTCFullYear();
+    const fechaFormateada = `${dia < 10 ? '0' + dia : dia}-${mes < 10 ? '0' + mes : mes
+      }-${anio}`;
+    return fechaFormateada;
+  };
+
+
+  console.log(dateFormat(new Date()))
+
+
   const formik = useFormik({
     initialValues: {
       startDate: "",
@@ -57,11 +72,24 @@ export default function Grafics() {
       for (let index = 0; index < dataGraphic.labels.length; index++) {
         const element = dataGraphic.labels[index];
 
-        const data = await AxiosClient({
+        let data = await AxiosClient({
           url: `/incidence/graphics/1/${element}/2023-04-25/2023-04-27`,
         });
     
         if (!data.error) dataGraphic.pending.push(data.data[0][0]);
+
+        data = await AxiosClient({
+          url: `/incidence/graphics/2/${element}/2023-04-25/2023-04-27`,
+        });
+    
+        if (!data.error) dataGraphic.processing.push(data.data[0][0]);
+
+
+        data = await AxiosClient({
+          url: `/incidence/graphics/3/${element}/2023-04-25/2023-04-27`,
+        });
+    
+        if (!data.error) dataGraphic.done.push(data.data[0][0]);
         
       }
 
