@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineUser, AiOutlineHome } from "react-icons/ai";
-import {FaClipboardList} from "react-icons/fa"
-import {FcStatistics} from "react-icons/fc"
+import { FaClipboardList } from "react-icons/fa";
+import { FcStatistics } from "react-icons/fc";
 import { FiUsers } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 
@@ -12,18 +12,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const AdminSidebar = ({ children }) => {
-
-
   //Esto es para abrir y cerrar el sidebar
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-
-
-
   //Son los items del sisebar
   const menuItem = [
-    
     {
       path: "/Inicio",
       name: "Componentes",
@@ -42,19 +36,18 @@ const AdminSidebar = ({ children }) => {
     {
       path: "/Estadisticas",
       name: "Estadisticas",
-      icon: <FcStatistics/>
+      icon: <FcStatistics />,
     },
     {
       path: "/Perfil",
       name: "Perfil",
       icon: <AiOutlineUser />,
     },
-   
   ];
   return (
-    <div className="contenedor">
+    <div className="d-flex">
       {/* Sidebar */}
-      <div style={{  width: isOpen ? "250px" : "50px" }} className="sidebars">
+      <div style={{ width: isOpen ? "250px" : "50px" }} className="sidebars ">
         <div className="top_sections">
           <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">
             SIRID
@@ -82,13 +75,13 @@ const AdminSidebar = ({ children }) => {
             </div>
           </NavLink>
         ))}
-        
       </div>
-      <LogoutButton/>
-      <main>{children}</main>
-      <div>
-        <></>
-      </div>
+      <LogoutButton />
+
+      <div className="vh-100 "></div>
+      <main className="h-100">{children}</main>
+
+
     </div>
   );
 };

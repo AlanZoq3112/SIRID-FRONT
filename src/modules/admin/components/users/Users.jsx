@@ -188,6 +188,8 @@ const Users = () => {
         cell: (row) => <div>{row.name} {row.primerApellido} {row.segundoApellido}</div>,
         sortable: true,
         selector: (row) => row.name,
+        width:'200px',
+
       },
       // {
       //   name: "Primer Apelido",
@@ -204,10 +206,11 @@ const Users = () => {
       {
         name: "E-mail",
         cell: (row) => (
-          <div style={{ width: "700px", padding: "5px" }}>
+          <div >
             {row.correoElectronico}
           </div>
         ),
+        width:'200px',
         sortable: true,
         selector: (row) => row.correoElectronico,
       },
@@ -223,7 +226,7 @@ const Users = () => {
         cell: (row) => <div>{row.academicDivision.name}</div>,
         sortable: true,
         selector: (row) => row.academicDivision.name,
-        width: "160px"
+        width: "130px"
       },
       {
         name: "Status",
@@ -235,10 +238,12 @@ const Users = () => {
           ),
         sortable: true,
         selector: (row) => row.status,
+        width:'100px'
         
       },
       {
         name: "Editar",
+        width:'100px',
         cell: (row) => (
           <>
             <ButtonCircle

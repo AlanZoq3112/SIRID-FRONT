@@ -398,7 +398,7 @@ const Sidebar = ({ children }) => {
                       <input
                         type="file"
                         multiple
-                        accept=".jpg,.jpeg,.png,.gif,.bmp"
+                        accept=".jpg,.jpeg,.png,.gif,.bmp,.mp4"
                         onChange={(e) => {
                           convertira64(e.target.files);
                         }}
