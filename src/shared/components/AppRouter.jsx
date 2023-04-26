@@ -58,7 +58,6 @@ export const AppRouter = () => {
                           <Route path="/Estadisticas" element={<Grafics />} />
                           <Route path="/IncidenciasPendientes" element={<IncidenciasPendientes />}/>
                           <Route path="/reset-password" element={<ChangePassword />} />
-
                           <Route path="/CambiarContra" element={<ForgotPasswordLog />} />
                         </Routes>
                       </Container>

@@ -75,6 +75,7 @@ const AdminSidebar = ({ children }) => {
             </div>
           </NavLink>
         ))}
+
       </div>
       <LogoutButton />
 

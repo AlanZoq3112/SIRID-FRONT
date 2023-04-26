@@ -7,9 +7,9 @@ import { Loading } from "./../../../../shared/components/Loading";
 import { FilterComponent } from "./../../../../shared/components/FilterComponent";
 import { UserForm } from "./components/UserForm";
 import { EditUserForm } from "./components/EditUserForm";
-import { DowlandDocentes } from "./components/DowlandDocentes";
+import { DocenteForm } from "./components/DocenteForm";
 import { TabView, TabPanel } from "primereact/tabview";
-
+import { Tooltip } from 'primereact/tooltip';
 import Alert, {
   confirmMsg,
   confirmTitle,
@@ -113,54 +113,6 @@ const Users = () => {
     getUsuarios();
   }, []);
 
-  const enableOrDisable = (row) => {
-    Alert.fire({
-      title: confirmTitle,
-      text: confirmMsg,
-      icon: "warning",
-      confirmButtonColor: "#009574",
-      confirmButtonText: "Aceptar",
-      cancelButtonColor: "#DD6B55",
-      cancelButtonText: "Cancelar",
-      reverseButtons: true,
-      backdrop: true,
-      showCancelButton: true,
-      showLoaderOnConfirm: true,
-      allowOutsideClick: () => !Alert.isLoading,
-      preConfirm: async () => {
-        row.status = !row.status;
-        try {
-          const response = await AxiosClient({
-            method: "PATCH",
-            url: "/user/",
-            data: JSON.stringify(row),
-          });
-          if (!response.error) {
-            Alert.fire({
-              title: successTitle,
-              text: successMsg,
-              icon: "success",
-              confirmButtonColor: "#3085d6",
-              confirmButtonText: "Aceptar",
-            });
-          }
-
-          return response;
-        } catch (error) {
-          Alert.fire({
-            title: errorTitle,
-            text: errorMsg,
-            icon: "error",
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "Aceptar",
-          });
-        } finally {
-          getUsuarios();
-        }
-      },
-    });
-  };
-
   const headerComponent = React.useMemo(() => {
     const handleClear = () => {
       if (filterText) setFilterText("");
@@ -229,6 +181,7 @@ const Users = () => {
         width: "130px"
       },
       {
+
         name: "Status",
         cell: (row) =>
           row.status ? (
@@ -244,8 +197,9 @@ const Users = () => {
       {
         name: "Editar",
         width:'100px',
+
         cell: (row) => (
-          <>
+          <>  
             <ButtonCircle
               icon="edit"
               type={"btn btn-outline-warning btn-circle"}
@@ -290,18 +244,7 @@ const Users = () => {
               <Card.Header>
                 <Row>
                   <Col sm={11} className="text-end"><center><b>Todos los Usuarios</b></center></Col>
-                  <Col sm={1} className="text-end">
-                    <ButtonCircle
-                      type={"btn btn-outline-success"}
-                      onClick={() => setIsOpen(true)}
-                      icon="user-plus"
-                      size={16}
-                    />
-                    <UserForm
-                      isOpen={isOpen}
-                      onClose={() => setIsOpen(false)}
-                      setUsuarios={setUsuarios}
-                    />
+                  <Col sm={1} className="text-end"> 
                     {selectedUsuarios && (
                       <EditUserForm
                         isOpen={isEditing}
@@ -331,7 +274,7 @@ const Users = () => {
               </Card.Body>
             </Card>
           </TabPanel>
-          <TabPanel header="Docentes" leftIcon="pi pi-book mr-2">
+          <TabPanel header="Docentes">
             <Card>
               <Card.Header>
                 <Row>
@@ -343,7 +286,7 @@ const Users = () => {
                       icon="user-plus"
                       size={16}
                     />
-                    <UserForm
+                    <DocenteForm
                       isOpen={isOpen}
                       onClose={() => setIsOpen(false)}
                       setUsuarios={setUsuarios}
@@ -388,7 +331,7 @@ const Users = () => {
             </Card>
           </TabPanel>
 
-          <TabPanel header="Personal de Soporte" leftIcon="pi pi-desktop mr-2">
+          <TabPanel header="Personal de Soporte">
             <Card>
               <Card.Header>
                 <Row>

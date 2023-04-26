@@ -118,9 +118,7 @@ export const EditAreasForm = ({ isOpen, setAreas, onClose, area }) => {
                 <Form.Group className='mb-3'>
                     <Row>
                         <Col className='text-end'>
-                            <Button className='me-2' variant='outline-danger' onClick={handleClose}>
-                                <FeatherIcon icon='x'/>&nbsp;Cerrar
-                            </Button>
+                           
                             <Button type='submit' variant='outline-success'>
                                 <FeatherIcon icon='check'/>&nbsp;Guardar
                             </Button>
