@@ -51,10 +51,7 @@ export const AppRouter = () => {
                     <AdminSidebar>
                       <Container style={{ marginTop: "20px" }}>
                         <Routes>
-                          <Route
-                            path="/Componentes"
-                            element={<Componentes />}
-                          />
+                          <Route path="/Inicio" element={<Componentes />}/>
                           <Route path="/Users" element={<Users />} />
                           <Route path="/Perfil" element={<Perfil />} />
                           <Route path="/IncidenciasPendientes" element={<IncidenciasPendientes />}/>
@@ -73,7 +70,7 @@ export const AppRouter = () => {
                         <Routes>
                         
                           <Route
-                            path="/Incidencias"
+                            path="/Inicio"
                             element={<IncidenciasScreen />}
                           />
                           <Route path="/Perfil" element={<Perfil />} />
@@ -97,7 +94,7 @@ export const AppRouter = () => {
                       <SoporteSidebar>
                         <Container style={{ marginTop: "20px" }}>
                           <Routes>
-                            <Route path="/IncidenciasPendientes" element={<IncidenciasPendientes />}/>                 
+                            <Route path="/Inicio" element={<IncidenciasPendientes />}/>                 
                             <Route path="/Perfil" element={<Perfil />} />
                             <Route path="/reset-password" element={<ChangePassword />} />
                             <Route path="/CambiarContra" element={<ForgotPasswordLog />} />

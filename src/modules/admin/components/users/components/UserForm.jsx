@@ -90,13 +90,7 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
       correo_electronico: yup
         .string()
         .email("")
-        .test(
-          "extension",
-          "Solo se permiten correos con la extensión @utez.edu.mx",
-          (value) => {
-            return value.endsWith("@utez.edu.mx");
-          }
-        )
+
         
     }),
     onSubmit: async (values) => {

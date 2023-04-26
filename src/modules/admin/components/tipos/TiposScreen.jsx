@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Col, Row, Badge } from 'react-bootstrap'
+import { Card, Col, Row } from 'react-bootstrap'
 import DataTable from 'react-data-table-component'
 import AxiosClient from './../../../../shared/plugins/axios'
 import { ButtonCircle } from './../../../../shared/components/ButtonCircle'
 import { Loading } from './../../../../shared/components/Loading'
 import { FilterComponent } from './../../../../shared/components/FilterComponent'
 import { TiposForm } from './components/TiposForm'
-import { EditTiposForm } from './components/EditTiposForm'
 
 import Alert, {
     confirmMsg, confirmTitle, errorMsg, errorTitle, successMsg, successTitle
@@ -19,9 +18,7 @@ const options = {
 
 export const TiposScreen = () => {
     const [tipos, setTipos] = useState([])
-    const [selectedTipo, setSelectedTipo] = useState({})
     const [isLoading, setIsLoading] = useState(false)
-    const [isEditing, setIsEditing] = useState(false)
     const [filterText, setFilterText] = useState("")
     const [isOpen, setIsOpen] = useState(false)
 
@@ -111,38 +108,20 @@ export const TiposScreen = () => {
         name: '#',
         cell: (row, index) => <div>{index + 1}</div>,
         sortable: true,
+        width: '100px'
     },
     {
-        name: 'Tipo de Área',
+        name: 'Nombre del Tipo de Área',
         cell: (row) => <div>{row.name}</div>,
         sortable: true,
         selector: (row) => row.name
     },
-
-    {
-        name: 'Acciones',
-        cell: (row) => <>
-            <ButtonCircle
-                icon='edit'
-                type={'btn btn-outline-warning btn-circle'}
-                size={16}
-                onClick={() => {
-                    setIsEditing(true)
-                    setSelectedTipo(row)
-                }}
-            >
-
-            </ButtonCircle>
-            
-
-        </>//fragment
-    }
     ],[])
     return <Card>
         <Card.Header>
             <Row>
-                <Col>Tipos de Área</Col>
-                <Col className='text-end'>
+                <Col sm={11} className='text-end'><center><b>Tipos de Áreas de la Universidad</b></center></Col>
+                <Col sm={1} className='text-end'>
                     <ButtonCircle
                         type={'btn btn-outline-success'}
                         onClick={() => setIsOpen(true)}
@@ -153,12 +132,6 @@ export const TiposScreen = () => {
                         isOpen={isOpen}
                         onClose={() => setIsOpen(false)}
                         setTipos={setTipos}
-                    />
-                    <EditTiposForm
-                        isOpen={isEditing}
-                        onClose={() => setIsEditing(false)}
-                        setTipos={setTipos}
-                        tipo={selectedTipo}
                     />
                 </Col>
             </Row>

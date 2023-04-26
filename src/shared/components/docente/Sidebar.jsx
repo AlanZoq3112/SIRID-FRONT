@@ -221,7 +221,7 @@ const Sidebar = ({ children }) => {
   //Son los items del sisebar
   const menuItem = [
     {
-      path: "/incidencias",
+      path: "/Inicio",
       name: "Incidencias",
       icon: <FaClipboardList />,
     },
@@ -398,6 +398,7 @@ const Sidebar = ({ children }) => {
                       <input
                         type="file"
                         multiple
+                        accept=".jpg,.jpeg,.png,.gif,.bmp"
                         onChange={(e) => {
                           convertira64(e.target.files);
                         }}
@@ -411,14 +412,6 @@ const Sidebar = ({ children }) => {
                 <Form.Group className="mb-3">
                   <Row>
                     <Col className="text-end">
-                      <Button
-                        className="me-2"
-                        variant="outline-danger"
-                        onClick={handleClose}
-                      >
-                        <FeatherIcon icon="x" />
-                        &nbsp;Cerrar
-                      </Button>
                       <Button type="submit" variant="outline-success">
                         <FeatherIcon icon="check" />
                         &nbsp;Guardar

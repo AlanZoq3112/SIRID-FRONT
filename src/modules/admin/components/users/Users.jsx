@@ -179,29 +179,28 @@ const Users = () => {
     () => [
       {
         name: "#",
-        cell: (row, index) => (
-          <div style={{ width: "50px", padding: "5px" }}>{index + 1}</div>
-        ),
+        cell: (row, index) => <div>{index + 1}</div>,
         sortable: true,
+        width: '60px'
       },
       {
-        name: "Nombre",
-        cell: (row) => <div>{row.name}</div>,
+        name: "Nombre Completo",
+        cell: (row) => <div>{row.name} {row.primerApellido} {row.segundoApellido}</div>,
         sortable: true,
         selector: (row) => row.name,
       },
-      {
-        name: "Primer Apelido",
-        cell: (row) => <div>{row.primerApellido}</div>,
-        sortable: true,
-        selector: (row) => row.primerApellido,
-      },
-      {
-        name: "Segundo Apelido",
-        cell: (row) => <div>{row.segundoApellido}</div>,
-        sortable: true,
-        selector: (row) => row.segundoApellido,
-      },
+      // {
+      //   name: "Primer Apelido",
+      //   cell: (row) => <div>{row.primerApellido}</div>,
+      //   sortable: true,
+      //   selector: (row) => row.primerApellido,
+      // },
+      // {
+      //   name: "Segundo Apelido",
+      //   cell: (row) => <div>{row.segundoApellido}</div>,
+      //   sortable: true,
+      //   selector: (row) => row.segundoApellido,
+      // },
       {
         name: "E-mail",
         cell: (row) => (
@@ -217,12 +216,14 @@ const Users = () => {
         cell: (row) => <div>{row.roles.name}</div>,
         sortable: true,
         selector: (row) => row.roles.name,
+        width: "100px"
       },
       {
         name: "Divición Académica",
         cell: (row) => <div>{row.academicDivision.name}</div>,
         sortable: true,
         selector: (row) => row.academicDivision.name,
+        width: "160px"
       },
       {
         name: "Status",
@@ -234,9 +235,10 @@ const Users = () => {
           ),
         sortable: true,
         selector: (row) => row.status,
+        
       },
       {
-        name: "Acciones",
+        name: "Editar",
         cell: (row) => (
           <>
             <ButtonCircle
@@ -248,7 +250,7 @@ const Users = () => {
                 setSelectedUsuarios(row);
               }}
             ></ButtonCircle>
-            {row.status ? (
+            {/* {row.status ? (
               <ButtonCircle
                 icon="trash-2"
                 type={"btn btn-outline-danger btn-circle"}
@@ -266,7 +268,7 @@ const Users = () => {
                   enableOrDisable(row);
                 }}
               ></ButtonCircle>
-            )}
+            )} */}
           </>
         ), //fragment
       },
@@ -282,8 +284,8 @@ const Users = () => {
             <Card>
               <Card.Header>
                 <Row>
-                  <Col>Usuarios</Col>
-                  <Col className="text-end">
+                  <Col sm={11} className="text-end"><center><b>Todos los Usuarios</b></center></Col>
+                  <Col sm={1} className="text-end">
                     <ButtonCircle
                       type={"btn btn-outline-success"}
                       onClick={() => setIsOpen(true)}
@@ -328,7 +330,7 @@ const Users = () => {
             <Card>
               <Card.Header>
                 <Row>
-                  <Col>Docentes</Col>
+                  <Col  className="text-end"><center><b>Docentes</b></center></Col>
                   <Col className="text-end">
                   <ButtonCircle
                       type={"btn btn-outline-success"}

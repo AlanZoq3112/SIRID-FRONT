@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Col, Row, Badge } from 'react-bootstrap'
+import { Card, Col, Row } from 'react-bootstrap'
 import DataTable from 'react-data-table-component'
 import AxiosClient from './../../../../shared/plugins/axios'
 import { ButtonCircle } from './../../../../shared/components/ButtonCircle'
@@ -14,7 +14,7 @@ import Alert, {
 
 const options = {
     rowsPerPageText: 'Registros por página',
-    rangeSeparatorText: 'de'
+    rangeSeparatorText: 'de',
 }
 
 export const AreasScreen = () => {
@@ -113,37 +113,19 @@ export const AreasScreen = () => {
         name: '#',
         cell: (row, index) => <div>{index + 1}</div>,
         sortable: true,
+        width: '150px'
     },
     {
-        name: 'Área',
+        name: 'Nombre del Área',
         cell: (row) => <div>{row.name}</div>,
         sortable: true,
         selector: (row) => row.name
     },
-
-    {
-        name: 'Acciones',
-        cell: (row) => <>
-            <ButtonCircle
-                icon='edit'
-                type={'btn btn-outline-warning btn-circle'}
-                size={16}
-                onClick={() => {
-                    setIsEditing(true)
-                    setSelectedArea(row)
-                }}
-            >
-
-            </ButtonCircle>
-            
-
-        </>//fragment
-    }
     ],[])
     return <Card>
         <Card.Header>
             <Row>
-                <Col>Áreas Universitarias</Col>
+                <Col sm={11}><center><b>Áreas Universitarias</b></center></Col>
                 <Col className='text-end'>
                     <ButtonCircle
                         type={'btn btn-outline-success'}
@@ -166,21 +148,22 @@ export const AreasScreen = () => {
             </Row>
         </Card.Header>
         <Card.Body>
-            <DataTable
-                columns={columns}
-                data={filteredAreas}
-                progressPending={isLoading}
-                progressComponent={<Loading />}
-                noDataComponent={'Sin registros'}
-                pagination
-                paginationComponentOptions={options}
-                subHeader
-                subHeaderComponent={headerComponent}
-                persistTableHead
-                striped={true}
-                highlightOnHover={true}
+        <DataTable
+  columns={columns}
+  data={filteredAreas}
+  progressPending={isLoading}
+  progressComponent={<Loading />}
+  noDataComponent={'Sin registros'}
+  pagination
+  paginationComponentOptions={options}
+  paginationPerPage={5} // Muestra solo 5 registros por página
+  subHeader
+  subHeaderComponent={headerComponent}
+  persistTableHead
+  striped={true}
+  highlightOnHover={true}
+/>
 
-            />
         </Card.Body>
     </Card>
 }

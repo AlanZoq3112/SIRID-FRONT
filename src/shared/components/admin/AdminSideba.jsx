@@ -5,7 +5,6 @@ import {FaClipboardList} from "react-icons/fa"
 import {FcStatistics} from "react-icons/fc"
 import { FiUsers } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
-import { useFormik } from "formik";
 
 import LogoutButton from "../LogoutButton";
 
@@ -19,44 +18,21 @@ const AdminSidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  const toast = useRef(null);
 
-  const show = () => {
-    toast.current.show({
-      severity: "success",
-      summary: "Form Submitted",
-      detail: formik.values.value,
-    });
-  };
 
-  const formik = useFormik({
-    initialValues: {
-      value: "",
-    },
-    validate: (data) => {
-      let errors = {};
-      if (!data.value) {
-        errors.value = "El titulo es obligatorio.";
-      }
-      return errors;
-    },
-    onSubmit: (data) => {
-      data && show(data);
-      formik.resetForm();
-    },
-  });
 
   //Son los items del sisebar
   const menuItem = [
+    
     {
-      path: "/IncidenciasPendientes",
-      name: "Incidencias Pendientes",
-      icon: <FaClipboardList />,
-    },
-    {
-      path: "/Componentes",
+      path: "/Inicio",
       name: "Componentes",
       icon: <AiOutlineHome />,
+    },
+    {
+      path: "/IncidenciasPendientes",
+      name: "Incidencias",
+      icon: <FaClipboardList />,
     },
     {
       path: "/Users",
@@ -78,7 +54,7 @@ const AdminSidebar = ({ children }) => {
   return (
     <div className="contenedor">
       {/* Sidebar */}
-      <div style={{ width: isOpen ? "250px" : "50px" }} className="sidebars">
+      <div style={{  width: isOpen ? "250px" : "50px" }} className="sidebars">
         <div className="top_sections">
           <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">
             SIRID

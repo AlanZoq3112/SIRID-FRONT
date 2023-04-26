@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Card, Col, Row, Badge } from "react-bootstrap";
+import { Card, Col, Row, Toast, Button } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import AxiosClient from "./../../../shared/plugins/axios";
 import { ButtonCircle } from "./../../../shared/components/ButtonCircle";
@@ -10,16 +10,7 @@ import { AiOutlineInfoCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { BsAlarm } from "react-icons/bs";
 import { TabView, TabPanel } from "primereact/tabview";
 import { AuthContext } from "./../../auth/authContext";
-import Toast from "react-bootstrap/Toast";
-import Alert, {
-  confirmMsg,
-  confirmTitle,
-  errorMsg,
-  errorTitle,
-  successMsg,
-  successTitle,
-} from "./../../../shared/plugins/alert";
-
+import { AiOutlineAlert } from 'react-icons/ai';
 const options = {
   rowsPerPageText: "Registros por página",
   rangeSeparatorText: "de",
@@ -31,7 +22,6 @@ const IncidenciasScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [filterText, setFilterText] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
 
   //Datos del usuario logueado
   const { user } = useContext(AuthContext);
@@ -80,54 +70,6 @@ const IncidenciasScreen = () => {
     getIncidencias();
   }, []);
 
-  const enableOrDisable = (row) => {
-    Alert.fire({
-      title: confirmTitle,
-      text: confirmMsg,
-      icon: "warning",
-      confirmButtonColor: "#009574",
-      confirmButtonText: "Aceptar",
-      cancelButtonColor: "#DD6B55",
-      cancelButtonText: "Cancelar",
-      reverseButtons: true,
-      backdrop: true,
-      showCancelButton: true,
-      showLoaderOnConfirm: true,
-      allowOutsideClick: () => !Alert.isLoading,
-      preConfirm: async () => {
-        row.status = !row.status;
-
-        try {
-          const response = await AxiosClient({
-            method: "PATCH",
-            url: "/incidence/",
-            data: JSON.stringify(row),
-          });
-          if (!response.error) {
-            Alert.fire({
-              title: successTitle,
-              text: successMsg,
-              icon: "success",
-              confirmButtonColor: "#3085d6",
-              confirmButtonText: "Aceptar",
-            });
-          }
-          return response;
-        } catch (error) {
-          Alert.fire({
-            title: errorTitle,
-            text: errorMsg,
-            icon: "error",
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "Aceptar",
-          });
-        } finally {
-          getIncidencias();
-        }
-      },
-    });
-  };
-
   const headerComponent = React.useMemo(() => {
     const handleClear = () => {
       if (filterText) setFilterText("");
@@ -146,6 +88,7 @@ const IncidenciasScreen = () => {
       name: "#",
       cell: (row, index) => <div>{index + 1}</div>,
       sortable: true,
+      width: "60px",
     },
     {
       name: "Título",
@@ -218,27 +161,55 @@ const IncidenciasScreen = () => {
     },
   ]);
 
+  const [show, setShow] = useState(false);
+
   return (
     <>
-      <Toast>
-        <Toast.Header>
-          <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-          <strong className="me-auto">SIRID</strong>
-          <small>Tomar en cuenta</small>
-        </Toast.Header>
-        <Toast.Body>
-          No podras ver los detalles de una incidencia hasta que un personal de
-          soporte sea asignado
-        </Toast.Body>
-      </Toast>
+      <Row>
+        <Col xs={6}>
+          <Toast
+            onClose={() => setShow(false)}
+            show={show}
+            delay={9000}
+            autohide
+          >
+            <Toast.Header>
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto">SIRID</strong>
+              <small>Atención!</small>
+            </Toast.Header>
+            <Toast.Body>
+              Es importante saber que solo podrás ver los detalles de las
+              incidencias En curso o Finalizadas
+            </Toast.Body>
+          </Toast>
+        </Col>
+        <Col xs={6}></Col>
+      </Row>
+
       <div className="card">
         <TabView>
           <TabPanel header="Todas las incidencias" leftIcon="pi pi-copy mr-2">
             <Card>
               <Card.Header>
                 <Row>
-                  <Col>Incidencias Propias</Col>
-                  <Col className="text-end">
+                  <Col sm={11} className="text-end">
+                    <center>
+                      <b>Incidencias Propias</b>
+                    </center>
+                  </Col>
+                  <Col sm={1} className="text-end">
+                    <Button
+                      variant="warning"
+                      title="Es importante saberlo"
+                      onClick={() => setShow(true)}
+                    >
+                      <AiOutlineAlert />
+                    </Button>
                     {selectedIncidencias && (
                       <EditIncidenciasScreen
                         isOpen={isEditing}

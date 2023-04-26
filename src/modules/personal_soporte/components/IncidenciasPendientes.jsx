@@ -24,9 +24,9 @@ const IncidenciasPendientes = () => {
   const [selectedIncidencias, setSelectedIncidencias] = useState(undefined);
   const [isEditing, setIsEditing] = useState(false);
   const [isFinish, setIsFinish] = useState(false);
-  const [setIsOpen] = useState(false);
 
 
+  const { user } = useContext(AuthContext);
   const filteredIncidencias = incidencias.filter(
     (incidencias) =>
       incidencias.title &&
@@ -40,7 +40,6 @@ const IncidenciasPendientes = () => {
         incidencia.title.toLowerCase().includes(filterText.toLowerCase()) &&
         incidencia.status.name === "Pendiente"
     );
-
      //Incidencias Activas
      const filteredActivas = incidencias.filter(
       (incidencia) =>
@@ -54,7 +53,7 @@ const IncidenciasPendientes = () => {
     (incidencia) =>
       incidencia.title &&
       incidencia.title.toLowerCase().includes(filterText.toLowerCase()) &&
-      incidencia.status.name === "Concluido"
+      incidencia.status.name === "Concluido" 
   );
   
 
@@ -91,6 +90,7 @@ const IncidenciasPendientes = () => {
       name: "#",
       cell: (row, index) => <div>{index + 1}</div>,
       sortable: true,
+      width: "60px"
     },
     {
       name: "Titulo",
@@ -224,8 +224,8 @@ const IncidenciasPendientes = () => {
             <Card>
               <Card.Header>
                 <Row>
-                  <Col>Todas las Incidencias</Col>
-                  <Col className="text-end">
+                  <Col sm={11} className="text-end"><center><b>Todas las Incidencias</b></center></Col>
+                  <Col sm={1} className="text-end">
                     {selectedIncidencias && (
                       <DetallesIncidencia
                         isOpen={isEditing}
@@ -264,12 +264,13 @@ const IncidenciasPendientes = () => {
               </Card.Body>
             </Card>
           </TabPanel>
+          
           <TabPanel header="Pendientes" leftIcon="pi pi-book mr-2">
           <Card>
               <Card.Header>
                 <Row>
-                  <Col>Incidencias Pendientes</Col>
-                  <Col className="text-end">
+                  <Col sm={11} className="text-end"><center><b>Incidencias Pendientes</b></center></Col>
+                  <Col sm={1} className="text-end">
                     {selectedIncidencias && (
                       <DetallesIncidencia
                         isOpen={isEditing}
@@ -313,8 +314,8 @@ const IncidenciasPendientes = () => {
           <Card>
               <Card.Header>
                 <Row>
-                  <Col>Incidencias en Curso</Col>
-                  <Col className="text-end">
+                  <Col sm={11} className="text-end"><center><b>Incidencias en Curso</b></center></Col>
+                  <Col sm={1} className="text-end">
                     {selectedIncidencias && (
                       <DetallesIncidencia
                         isOpen={isEditing}
@@ -358,8 +359,8 @@ const IncidenciasPendientes = () => {
             <Card>
               <Card.Header>
                 <Row>
-                  <Col>Incidencias Pendientes</Col>
-                  <Col className="text-end">
+                  <Col sm={11} className="text-end"><center><b>Incidencias Concluidas</b></center></Col>
+                  <Col sm={1} className="text-end">
                     {selectedIncidencias && (
                       <DetallesIncidencia
                         isOpen={isEditing}

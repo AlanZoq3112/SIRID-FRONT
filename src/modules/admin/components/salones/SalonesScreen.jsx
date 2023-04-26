@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Row, Badge } from "react-bootstrap";
+import { Card, Col, Row, Badge, Tooltip  } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import AxiosClient from "./../../../../shared/plugins/axios";
 import { ButtonCircle } from "./../../../../shared/components/ButtonCircle";
@@ -119,9 +119,10 @@ const SalonesScreen = () => {
       name: "#",
       cell: (row, index) => <div>{index + 1}</div>,
       sortable: true,
+      width: '60px'
     },
     {
-      name: "Salón",
+      name: "Nombre del Salón",
       cell: (row) => <div>{row.name}</div>,
       sortable: true,
       selector: (row) => row.name,
@@ -136,6 +137,7 @@ const SalonesScreen = () => {
         ),
       sortable: true,
       selector: (row) => row.status,
+      
     },
     {
       name: "Área",
@@ -150,7 +152,8 @@ const SalonesScreen = () => {
       selector: (row) => row.name,
     },
     {
-      name: "Acciones",
+      name: "Editar",
+      width: '100px',
       cell: (row) => (
         <>
           <ButtonCircle
@@ -161,7 +164,15 @@ const SalonesScreen = () => {
               setIsEditing(true);
               setSelectedSalones(row);
             }}
-          ></ButtonCircle>
+          >
+          </ButtonCircle>
+        </>
+      ),
+    },
+    {
+      name: "Acciones",
+      cell: (row) => (
+        <>
           {row.status ? (
             <ButtonCircle
               icon="trash-2"
@@ -190,8 +201,8 @@ const SalonesScreen = () => {
     <Card>
       <Card.Header>
         <Row>
-          <Col>Salones</Col>
-          <Col className="text-end">
+          <Col sm={11} className="text-end"><center><b>Salones de la Universidad</b></center></Col>
+          <Col sm={1} className="text-end">
             <ButtonCircle
               type={"btn btn-outline-success"}
               onClick={() => setIsOpen(true)}

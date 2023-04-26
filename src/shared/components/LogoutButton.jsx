@@ -36,7 +36,7 @@ const LogoutButton = () => {
           title="Cerrar sesión"
         />
       </Button>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>Confirmar cierre de sesión</Modal.Title>
         </Modal.Header>
@@ -44,11 +44,11 @@ const LogoutButton = () => {
           ¿Estás seguro de que deseas cerrar sesión?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancelar
+          <Button variant="danger" onClick={handleClose}>
+            No, Permanecer dentro
           </Button>
           <Button variant="primary" onClick={handleLogout}>
-            Cerrar sesión
+           Si, Cerrar sesión
           </Button>
         </Modal.Footer>
       </Modal>

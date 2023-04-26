@@ -18,8 +18,9 @@ export const AreasForm = ({ isOpen, setAreas, onClose }) => {
         validationSchema: yup.object().shape({
             name: yup
                 .string()
-                .required('Campo obligatorio')
-                .min(4, 'Mínimo 4 caracteres'),
+                .min(4, 'Mínimo 4 caracteres')
+                .max(20, 'Máximo 20 caracteres permitidos')
+                .matches(/^[a-zA-Z0-9 ]+$/, "Solo se permiten letras y números."),
         }),
         onSubmit: async (values) => {
             Alert.fire({
@@ -110,9 +111,6 @@ export const AreasForm = ({ isOpen, setAreas, onClose }) => {
                 <Form.Group className='mb-3'>
                     <Row>
                         <Col className='text-end'>
-                            <Button className='me-2' variant='outline-danger' onClick={handleClose}>
-                                <FeatherIcon icon='x'/>&nbsp;Cerrar
-                            </Button>
                             <Button type='submit' variant='outline-success'>
                                 <FeatherIcon icon='check'/>&nbsp;Guardar
                             </Button>

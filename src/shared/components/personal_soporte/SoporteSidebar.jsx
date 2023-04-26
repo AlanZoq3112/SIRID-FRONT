@@ -46,7 +46,7 @@ const SoporteSidebar = ({ children }) => {
   const menuItem = [
   
     {
-      path: "/IncidenciasPendientes",
+      path: "/Inicio",
       name: "Incidencias Pendientes",
       icon: <AiOutlineHome />,
     },

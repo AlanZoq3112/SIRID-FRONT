@@ -13,7 +13,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 export const LoginScreen = () => {
   //Ocultar la contra
   const [showPassword, setShowPassword] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -30,6 +30,7 @@ export const LoginScreen = () => {
       password: yup.string().required("Campo obligatorio"),
     }),
     onSubmit: async (values) => {
+      setIsLoading(true); // Cambia el valor de isLoading a true
       try {
         const response = await AxiosClient({
           url: "/auth/login",
@@ -42,7 +43,7 @@ export const LoginScreen = () => {
             payload: response.data,
           };
           dispatch(action);
-          navigation("/Perfil", { replace: true });
+          navigation("/Inicio", { replace: true });
         } else {
           throw Error();
         }
@@ -54,6 +55,8 @@ export const LoginScreen = () => {
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Aceptar",
         });
+      } finally {
+        setIsLoading(true); // Cambia el valor de isLoading a false
       }
     },
   });
@@ -72,7 +75,10 @@ export const LoginScreen = () => {
         <Container className="py-5">
           <Row>
             <Col>
-              <Card className="rounded-3 text-black text-start h-100">
+             
+            </Col>
+            <Col>
+            <Card className="rounded-3 text-black text-start h-100">
                 <Card.Body className="p-md-6 mx-md-4">
                   <div className="text-center mb-4">
                     <Figure>
@@ -156,7 +162,6 @@ export const LoginScreen = () => {
                 </Card.Body>
               </Card>
             </Col>
-            <Col lg={4} md={6} sm={8} xs={10}></Col>
             <Col></Col>
           </Row>
         </Container>
