@@ -86,9 +86,7 @@ const AdminSidebar = ({ children }) => {
       </div>
       <LogoutButton/>
       <main>{children}</main>
-      <div>
-        <></>
-      </div>
+     
     </div>
   );
 };

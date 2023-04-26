@@ -21,7 +21,7 @@ import Alert, {
   successTitle,
 } from "../../../../../shared/plugins/alert";
 
-export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
+export const DocenteForm = ({ isOpen, setUsuarios, onClose }) => {
   const [diviciones, setDiviciones] = useState([]);
   const [roles, setRoles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -78,8 +78,8 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
       status: 1,
       changePassword: 0,
       role: {
-        id: 2,
-        name: "Soporte Tecnico",
+        id: 3,
+        name: "Docente",
       },
       academicDivision: {
         id: 0,
@@ -165,10 +165,10 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
       keyboard={false}
       show={isOpen}
       onHide={handleClose}
-      size="lg"
+      size="lg"z
     >
       <Modal.Header closeButton>
-        <Modal.Title>Registrar un Nuevo Personal de Soporte</Modal.Title>
+        <Modal.Title>Registrar un Nuevo Docente</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={form.handleSubmit}>
@@ -365,7 +365,7 @@ export const UserForm = ({ isOpen, setUsuarios, onClose }) => {
                     value={form.values.role.id}
                     onChange={form.handleChange}
                   >
-                    <option>Soporte Tecnico</option>
+                    <option>Docente</option>
                     {roles.map((rol) => (
                       <option
                         key={rol.id}
