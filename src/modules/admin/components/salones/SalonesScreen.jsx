@@ -175,7 +175,7 @@ const SalonesScreen = () => {
         <>
           {row.status ? (
             <ButtonCircle
-              icon="trash-2"
+              icon="slash"
               type={"btn btn-outline-danger btn-circle"}
               size={16}
               onClick={() => {

@@ -707,14 +707,7 @@ export const DetallesIncidencia = ({
               )}
 
               <Col className="text-end">
-                <Button
-                  className="me-2"
-                  variant="outline-danger"
-                  onClick={handleClose}
-                >
-                  <FeatherIcon icon="x" />
-                  &nbsp;Cerrar
-                </Button>
+               
                 <Button
                   variant="primary"
                   type="submit"
@@ -724,7 +717,7 @@ export const DetallesIncidencia = ({
                       : form.values.status.name === "Activo"
                   }
                 >
-                  Atender
+                  Atender Incidencia
                 </Button>
               </Col>
             </Row>
