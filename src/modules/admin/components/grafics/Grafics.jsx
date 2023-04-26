@@ -8,8 +8,10 @@ import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import AxiosClient from "../../../../shared/plugins/axios";
 import { useEffect } from "react";
+import { Loading } from "../../../../shared/components/LoadingPage";
 
 export default function Grafics() {
+  
   let dataGraphic = {
     labels: [],
     all: [],
@@ -18,27 +20,33 @@ export default function Grafics() {
     processing: [],
   };
 
-  const [data, setData] = useState(null);
+  const getDatesStartEnd = () => {
+    const currentMoth =
+      new Date().getMonth() + 1 > 9
+        ? new Date().getMonth() + 1
+        : "0" + (new Date().getMonth() + 1);
 
+    const year = new Date().getFullYear();
+    const lastDayOfMonth = new Date(year, currentMoth, 0).getDate();
+    const firstDay = `${year}-${currentMoth}-01`;
+    const lastDay = `${year}-${currentMoth}-${lastDayOfMonth}`;
 
-  const dateFormat = (date_start) => {
-    const fecha = new Date(date_start);
-    const dia = fecha.getUTCDate();
-    const mes = fecha.getUTCMonth() + 1;
-    const anio = fecha.getUTCFullYear();
-    const fechaFormateada = `${dia < 10 ? '0' + dia : dia}-${mes < 10 ? '0' + mes : mes
-      }-${anio}`;
-    return fechaFormateada;
+    return{
+      firstDay,
+      lastDay,
+    };
   };
 
+  const [dates, setDates] = useState({ firstDay:getDatesStartEnd().firstDay , lastDay:getDatesStartEnd().lastDay });
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false)
 
-  console.log(dateFormat(new Date()))
 
 
   const formik = useFormik({
     initialValues: {
-      startDate: "",
-      endDate: "",
+      startDate: getDatesStartEnd().firstDay,
+      endDate: getDatesStartEnd().lastDay,
     },
     validationSchema: yup.object().shape({
       startDate: yup.date().required("La fecha inicio es obligatoria"),
@@ -50,52 +58,51 @@ export default function Grafics() {
           "La fecha fin debe ser después de la fecha inicio"
         ),
     }),
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+
+      console.log(values)
+      
+      setDates({
+        firstDay: values.startDate,
+        lastDay: values.endDate,
+      });
+    },
   });
 
   const getCountIncidentsByAreas = async () => {
+
     const data = await AxiosClient({
-      url: "/incidence/graphics/2023-04-25/2023-04-27",
+      url: `/incidence/graphics/${dates.firstDay}/${dates.lastDay}`,
     });
 
     if (!data.error) {
-      console.log(data.data);
       for (let index = 0; index < data.data.length; index++) {
-        const [numAll , areaAll] = data.data[index];
-        console.log(numAll, areaAll)
+        const [numAll, areaAll] = data.data[index];
         dataGraphic.labels.push(areaAll);
         dataGraphic.all.push(numAll);
-        
       }
 
-  
       for (let index = 0; index < dataGraphic.labels.length; index++) {
         const element = dataGraphic.labels[index];
 
         let data = await AxiosClient({
-          url: `/incidence/graphics/1/${element}/2023-04-25/2023-04-27`,
+          url: `/incidence/graphics/1/${element}/${dates.firstDay}/${dates.lastDay}`,
         });
-    
+
         if (!data.error) dataGraphic.pending.push(data.data[0][0]);
 
         data = await AxiosClient({
-          url: `/incidence/graphics/2/${element}/2023-04-25/2023-04-27`,
+          url: `/incidence/graphics/2/${element}/${dates.firstDay}/${dates.lastDay}`,
         });
-    
+
         if (!data.error) dataGraphic.processing.push(data.data[0][0]);
 
-
         data = await AxiosClient({
-          url: `/incidence/graphics/3/${element}/2023-04-25/2023-04-27`,
+          url: `/incidence/graphics/3/${element}/${dates.firstDay}/${dates.lastDay}`,
         });
-    
+
         if (!data.error) dataGraphic.done.push(data.data[0][0]);
-        
       }
-
-
-
-
     }
 
     setData({
@@ -141,17 +148,14 @@ export default function Grafics() {
     });
   };
 
-
-
-useEffect(() => {
-  getCountIncidentsByAreas();
-
-}, [])
-
- 
+  useEffect(() => {
+    getDatesStartEnd();
+    getCountIncidentsByAreas();
+  }, [dates]);
 
   return (
     <Container>
+      <Loading isLoading={!!data?false:true}  />
       <Row>
         <Col xs={12} sm={12}>
           {/* Informacion del perfil */}
@@ -207,7 +211,6 @@ useEffect(() => {
                             <Button
                               type="submit"
                               className="mt-3"
-                              disabled={!(formik.isValid && formik.dirty)}
                             >
                               Cargar &nbsp;
                             </Button>
