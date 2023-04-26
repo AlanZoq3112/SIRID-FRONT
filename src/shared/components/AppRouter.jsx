@@ -28,6 +28,7 @@ import Users from "./../../modules/admin/components/users/Users";
 
 import IncidenciasPendientes from "./../../modules/personal_soporte/components/IncidenciasPendientes";
 import ChatSoporte from "../../modules/personal_soporte/components/ChatSoporte";
+import Grafics from "../../modules/admin/components/grafics/Grafics";
 
 
 export const AppRouter = () => {
@@ -54,6 +55,7 @@ export const AppRouter = () => {
                           <Route path="/Inicio" element={<Componentes />}/>
                           <Route path="/Users" element={<Users />} />
                           <Route path="/Perfil" element={<Perfil />} />
+                          <Route path="/Estadisticas" element={<Grafics />} />
                           <Route path="/IncidenciasPendientes" element={<IncidenciasPendientes />}/>
                           <Route path="/reset-password" element={<ChangePassword />} />
                           <Route path="/CambiarContra" element={<ForgotPasswordLog />} />

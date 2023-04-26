@@ -15,7 +15,6 @@ main{
   position: sticky;
   background:#002e60 ;
   color: #fff;
-  height: 140vh;
   width: 200px;
   transition: all 0.5s;
   flex-direction: column;

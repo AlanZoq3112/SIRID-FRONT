@@ -260,6 +260,8 @@ const IncidenciasPendientes = () => {
                   persistTableHead
                   striped={true}
                   highlightOnHover={true}
+                  paginationRowsPerPageOptions={[3, 5, 10, 15, 20, 25, 30]}
+                  paginationPerPage={3}
                 />
               </Card.Body>
             </Card>
@@ -395,6 +397,8 @@ const IncidenciasPendientes = () => {
                   persistTableHead
                   striped={true}
                   highlightOnHover={true}
+                  paginationRowsPerPageOptions={[5, 10, 15, 20, 25, 30]}
+                  paginationPerPage={6}
                 />
               </Card.Body>
             </Card>
