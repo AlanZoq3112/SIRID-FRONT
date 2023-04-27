@@ -45,23 +45,29 @@ export default function Grafics() {
 
     if (!data.error) {
       console.log(data.data);
-
-      for (let index = 0; index < data.data[0].length; index++) {
-        const [numAll, area] = data.data[0][index];
-        dataGraphic.labels.push(area);
+      for (let index = 0; index < data.data.length; index++) {
+        const [numAll , areaAll] = data.data[index];
+        console.log(numAll, areaAll)
+        dataGraphic.labels.push(areaAll);
         dataGraphic.all.push(numAll);
-
-        if (data.data[1].length > index) {
-          const [numPending] = data.data[1][index];
-          dataGraphic.pending.push(numPending);
-        }
-
-        console.log(data.data[2].length , ">", index)
-        if (data.data[2].length > index) {
-          const [numDone] = data.data[2][index];
-          dataGraphic.done.push(numDone);
-        }
+        
       }
+
+  
+      for (let index = 0; index < dataGraphic.labels.length; index++) {
+        const element = dataGraphic.labels[index];
+
+        const data = await AxiosClient({
+          url: `/incidence/graphics/1/${element}/2023-04-25/2023-04-27`,
+        });
+    
+        if (!data.error) dataGraphic.pending.push(data.data[0][0]);
+        
+      }
+
+
+
+
     }
 
     setData({
@@ -107,9 +113,14 @@ export default function Grafics() {
     });
   };
 
-  useEffect(() => {
-    getCountIncidentsByAreas();
-  }, []);
+
+
+useEffect(() => {
+  getCountIncidentsByAreas();
+
+}, [])
+
+ 
 
   return (
     <Container>
